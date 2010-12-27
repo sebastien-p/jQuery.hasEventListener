@@ -27,42 +27,46 @@
 
     $.fn.hasEventListener = function (event_name) {
 
-        event_name = /^([a-z]+)(\.([\w\d\-]+))?$/.exec(event_name);
-
         var event_listeners = this.data("events"),
-        iterator,
+        to_return = false,
         event_namespace,
-        found_namespace;
+        found_namespace,
+        iterator;
 
-        if (event_listeners && event_name) {
+        if (
+            event_listeners &&
+            (event_name = /^([a-z]+)(\.([\w\d\-]+))?$/.exec(event_name)) &&
+            (event_listeners = event_listeners[event_name[1]])
+        ) {
 
-            event_namespace = event_name[3];
-            event_listeners = event_listeners[event_name[1]];
-            iterator = event_listeners.length;
+            if (
+                (event_namespace = event_name[3])
+            ) {
 
-            while ((iterator -= 1) >= 0) {
+                iterator = event_listeners.length;
 
-                if (event_namespace) {
+                while ((iterator -= 1) >= 0) {
 
-                    found_namespace = event_listeners[iterator].namespace;
-
-                    if (found_namespace && (found_namespace.split(".")[0] === event_namespace)) {
+                    if (
+                        (found_namespace = event_listeners[iterator].namespace) &&
+                        (found_namespace.split(".")[0] === event_namespace)
+                    ) {
 
                         return TRUE;
 
                     }
 
-                } else {
-
-                    return TRUE;
-
                 }
+
+            } else {
+
+                to_return = TRUE;
 
             }
 
         }
 
-        return false;
+        return to_return;
 
     };
 
