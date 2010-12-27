@@ -17,5 +17,7 @@ Usage
 Licence
 --------
 Copyright (c) 2010 Sebastien P.
+
 http://twitter.com/_sebastienp
+
 MIT licensed.
