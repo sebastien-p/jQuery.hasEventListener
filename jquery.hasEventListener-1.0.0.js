@@ -1,3 +1,26 @@
+/*
+
+   Copyright (c) 2010 Sebastien P.
+
+   http://twitter.com/_sebastienp
+   http://github.com/sebastien-p/jquery.hasEventListener
+   http://jsfiddle.net/sebastienp/eHGqB/
+
+   MIT licensed.
+
+   ---
+
+   A jQuery plugin which tests if a jQuery element
+   actually has a particular event listener bound.
+
+   Usage :
+
+   - $("selector").hasEventListener("event"); // true or false
+   - $("selector").hasEventListener("event.namespace"); // true or false
+
+*/
+
+
 (function ($, TRUE) {
 
     "use strict";
