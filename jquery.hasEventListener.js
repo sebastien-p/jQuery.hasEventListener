@@ -7,20 +7,17 @@
         event_name = /^([a-z]+)(\.([\w\d\-]+))?$/.exec(event_name);
 
         var event_listeners = this.data("events"),
-        iterator,// = -1,
-        //array_length,
+        iterator,
         event_namespace,
-        event_type,
         found_namespace;
 
         if (event_listeners && event_name) {
 
-            event_type = event_name[1];
             event_namespace = event_name[3];
-            event_listeners = event_listeners[event_type];
-            iterator = event_listeners.length + 1;//array_length = event_listeners.length;
+            event_listeners = event_listeners[event_name[1]];
+            iterator = event_listeners.length;
 
-            while (iterator -= 1) {//while ((iterator += 1) < array_length) {
+            while ((iterator -= 1) >= 0) {
 
                 if (event_namespace) {
 
