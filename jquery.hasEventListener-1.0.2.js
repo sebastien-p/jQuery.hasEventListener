@@ -25,13 +25,13 @@
 */
 
 
-(function ($, TRUE) {
+(function ($, TRUE, REUSABLE_STRING) {
 
     "use strict";
 
-    var reusable_string = "hasEventListener";
+    /* $.hasEventListener(dom_element, event_name); */
 
-    $[reusable_string] = function (element, event_name) {
+    $[REUSABLE_STRING] = function (element, event_name) {
 
         var event_listeners = $.data(element, "events"),
         event_namespace,
@@ -40,6 +40,7 @@
 
         if (
             event_listeners &&
+            // RegExp for "event" or "event.namespace" (az.azAZ09_-).
             (event_name = /^([a-z]+)(\.([\w\d\-]+))?$/.exec(event_name)) &&
             (event_listeners = event_listeners[event_name[1]])
         ) {
@@ -50,6 +51,7 @@
 
                 iterator = event_listeners.length;
 
+                // Loop to see if there is a matching namespace.
                 while ((iterator -= 1) >= 0) {
 
                     if (
@@ -65,6 +67,7 @@
 
             } else {
 
+                // There is no such event or event.namespaced bound.
                 return TRUE;
 
             }
@@ -75,16 +78,20 @@
 
     };
 
-    $.expr[":"][reusable_string] = function (element, index, match) {
+    /* $("selector:hasEventListener(event_name)"); */
 
-        return $[reusable_string](element, match[3]);
+    $.expr[":"][REUSABLE_STRING] = function (element, index, match) {
 
-    };
-
-    $.fn[reusable_string] = function (event_name) {
-
-        return this.filter(":" + reusable_string + "(" + event_name + ")");
+        return $[REUSABLE_STRING](element, match[3]);
 
     };
 
-}(this.jQuery, true));
+    /* $("selector").hasEventListener(event_name); */
+
+    $.fn[REUSABLE_STRING] = function (event_name) {
+
+        return this.filter(":" + REUSABLE_STRING + "(" + event_name + ")");
+
+    };
+
+}(this.jQuery, true, "hasEventListener"));
