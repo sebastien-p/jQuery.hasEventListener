@@ -11,8 +11,12 @@ A quick demo is available [here at jsfiddle](http://jsfiddle.net/sebastienp/eHGq
 
 Usage
 ------
-* `$("selector").hasEventListener("event");` : true or false.
-* `$("selector").hasEventListener("event.namespace");` : true or false.
+* `$.hasEventListener(dom_element, "event");` : true or false
+* `$.hasEventListener(dom_element, "event.namespace");` : true or false
+* `$("selector:hasEventListener(event)");` : jQuery chainable object
+* `$("selector:hasEventListener(event.namespace)");` : jQuery chainable object
+* `$("selector").hasEventListener("event");` : jQuery chainable object
+* `$("selector").hasEventListener("event.namespace");` : jQuery chainable object
 
 Licence
 --------
