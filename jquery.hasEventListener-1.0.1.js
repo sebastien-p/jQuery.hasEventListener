@@ -15,8 +15,12 @@
 
    Usage :
 
-   - $("selector").hasEventListener("event"); // true or false
-   - $("selector").hasEventListener("event.namespace"); // true or false
+   - $.hasEventListener(dom_element, "event"); // true or false
+   - $.hasEventListener(dom_element, "event.namespace"); // true or false
+   - $("selector:hasEventListener(event)"); // jQuery chainable object
+   - $("selector:hasEventListener(event.namespace)"); // jQuery chainable object
+   - $("selector").hasEventListener("event"); // jQuery chainable object
+   - $("selector").hasEventListener("event.namespace"); // jQuery chainable object
 
 */
 
@@ -25,10 +29,11 @@
 
     "use strict";
 
-    $.fn.hasEventListener = function (event_name) {
+    var reusable_string = "hasEventListener";
 
-        var event_listeners = this.data("events"),
-        to_return = false,
+    $[reusable_string] = function (element, event_name) {
+
+        var event_listeners = $.data(element, "events"),
         event_namespace,
         found_namespace,
         iterator;
@@ -60,13 +65,25 @@
 
             } else {
 
-                to_return = TRUE;
+                return TRUE;
 
             }
 
         }
 
-        return to_return;
+        return false;
+
+    };
+
+    $.expr[":"][reusable_string] = function (element, index, match) {
+
+        return $[reusable_string](element, match[3]);
+
+    };
+
+    $.fn[reusable_string] = function (event_name) {
+
+        return this.filter(":" + reusable_string + "(" + event_name + ")");
 
     };
 
