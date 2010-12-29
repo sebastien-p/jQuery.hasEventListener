@@ -51,7 +51,6 @@
 
                 iterator = event_listeners.length;
 
-                // Loop to see if there is a matching namespace.
                 while ((iterator -= 1) >= 0) {
 
                     if (
@@ -59,6 +58,7 @@
                         (found_namespace.split(".")[0] === event_namespace)
                     ) {
 
+                        // There is a such event.namespaced bound.
                         return TRUE;
 
                     }
@@ -67,16 +67,18 @@
 
             } else {
 
-                // There is no such event or event.namespaced bound.
+                // There is a such event (not namespaced) bound.
                 return TRUE;
 
             }
 
         }
 
+        // There is no such event or event.namespaced bound.
         return false;
 
     };
+
 
     /* $("selector:hasEventListener(event_name)"); */
 
@@ -85,6 +87,7 @@
         return $[REUSABLE_STRING](element, match[3]);
 
     };
+
 
     /* $("selector").hasEventListener(event_name); */
 
