@@ -25,13 +25,13 @@
 */
 
 
-(function ($, TRUE, REUSABLE_STRING) {
+(function ($, PLUGIN_NAME, TRUE) {
 
     "use strict";
 
     /* $.hasEventListener(dom_element, event_name); */
 
-    $[REUSABLE_STRING] = function (element, event_name) {
+    $[PLUGIN_NAME] = function (element, event_name) {
 
         var event_listeners = $.data(element, "events"),
         event_namespace,
@@ -82,19 +82,19 @@
 
     /* $("selector:hasEventListener(event_name)"); */
 
-    $.expr[":"][REUSABLE_STRING] = function (element, index, match) {
+    $.expr[":"][PLUGIN_NAME] = function (element, index, match) {
 
-        return $[REUSABLE_STRING](element, match[3]);
+        return $[PLUGIN_NAME](element, match[3]);
 
     };
 
 
     /* $("selector").hasEventListener(event_name); */
 
-    $.fn[REUSABLE_STRING] = function (event_name) {
+    $.fn[PLUGIN_NAME] = function (event_name) {
 
-        return this.filter(":" + REUSABLE_STRING + "(" + event_name + ")");
+        return this.filter(":" + PLUGIN_NAME + "(" + event_name + ")");
 
     };
 
-}(this.jQuery, true, "hasEventListener"));
+}(this.jQuery, "hasEventListener", true));
