@@ -7,14 +7,16 @@ A jQuery plugin which tests if a jQuery element actually has a particular event 
 
 Demo
 -----
-A quick demo is available [here at jsfiddle](http://jsfiddle.net/sebastienp/eHGqB/)
+A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB/](http://jsfiddle.net/sebastienp/eHGqB/)
 
 Usage
 ------
 * `$.hasEventListener(dom_element, "event");` : true or false
 * `$.hasEventListener(dom_element, "event.namespace");` : true or false
+* `$("selector:hasEventListener");` : jQuery chainable object
 * `$("selector:hasEventListener(event)");` : jQuery chainable object
 * `$("selector:hasEventListener(event.namespace)");` : jQuery chainable object
+* `$("selector").hasEventListener();` : jQuery chainable object
 * `$("selector").hasEventListener("event");` : jQuery chainable object
 * `$("selector").hasEventListener("event.namespace");` : jQuery chainable object
 
