@@ -15,11 +15,14 @@
 
    Usage :
 
+   - $.hasEventListener(dom_element); // true or false
    - $.hasEventListener(dom_element, "event"); // true or false
    - $.hasEventListener(dom_element, "event.namespace"); // true or false
+
    - $("selector:hasEventListener"); // jQuery chainable object
    - $("selector:hasEventListener(event)"); // jQuery chainable object
    - $("selector:hasEventListener(event.namespace)"); // jQuery chainable object
+
    - $("selector").hasEventListener(); // jQuery chainable object
    - $("selector").hasEventListener("event"); // jQuery chainable object
    - $("selector").hasEventListener("event.namespace"); // jQuery chainable object
