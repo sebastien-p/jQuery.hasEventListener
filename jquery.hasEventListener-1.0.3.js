@@ -36,7 +36,7 @@
 
     function is_plain_string(argument) {
 
-        return (argument && ($.type(argument) === "string") && $.trim(argument));
+        return !!(argument && ($.type(argument) === "string") && $.trim(argument));
 
     }
 
