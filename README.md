@@ -1,4 +1,4 @@
-"hasEventListener" plugin for [jQuery](http://jquery.com/) 1.4.2+
+"hasEventListener" plugin for [jQuery](http://jquery.com/) (tested and working with 1.2.3+)
 ================================
 
 Description
