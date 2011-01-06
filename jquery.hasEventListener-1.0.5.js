@@ -34,6 +34,9 @@
 
     "use strict";
 
+    // Old jQuery versions compatibility
+    var property = (+$.fn.jquery.slice(0, 3) > 1.3) ? "namespace" : "type";
+
     function is_plain_string(argument) {
 
         return !!(argument && (typeof argument === "string") && $.trim(argument));
@@ -43,13 +46,12 @@
 
     /* $.hasEventListener(dom_element, event_name); */
 
-    $[PLUGIN_NAME] = function (element, event_name) {
+    $[PLUGIN_NAME] = function (dom_element, event_name) {
 
-        var event_listeners = $.data(element, "events"),
-        to_return = false,
+        var event_listeners = $.data(dom_element, "events"),
+        to_return = !TRUE,
         event_namespace,
-        found_namespace,
-        iterator;
+        found_namespace;
 
         if (event_listeners) {
 
@@ -67,23 +69,21 @@
                         (event_namespace = event_name[3])
                     ) {
 
-                        iterator = event_listeners.length;
-
-                        while ((iterator -= 1) >= 0) {
+                        $.each(event_listeners, function () {
 
                             if (
-                                (found_namespace = event_listeners[iterator].namespace) &&
+                                (found_namespace = this[property]) &&
+                                // Split is to make it also work for delegated events
                                 (found_namespace.split(".")[0] === event_namespace)
                             ) {
 
                                 // There is a such event.namespaced bound.
-                                to_return = TRUE;
-
-                                break;
+                                // Returns false to stop the loop execution.
+                                return !(to_return = TRUE);
 
                             }
 
-                        }
+                        });
 
                     } else {
 
@@ -111,9 +111,9 @@
 
     /* $("selector:hasEventListener(event_name)"); */
 
-    $.expr[":"][PLUGIN_NAME] = function (element, index, match) {
+    $.expr[":"][PLUGIN_NAME] = function (dom_element, index, match) {
 
-        return $[PLUGIN_NAME](element, match[3]);
+        return $[PLUGIN_NAME](dom_element, match[3]);
 
     };
 
