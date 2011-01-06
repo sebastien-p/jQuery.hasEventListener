@@ -36,7 +36,7 @@
 
     function is_plain_string(argument) {
 
-        return !!(argument && ($.type(argument) === "string") && $.trim(argument));
+        return !!(argument && (typeof argument === "string") && $.trim(argument));
 
     }
 
@@ -55,8 +55,8 @@
 
             if (
                 is_plain_string(event_name) &&
-                // RegExp for "event" or "event.namespace" (az.azAZ09_-).
-                (event_name = /^([a-z]+)(\.([\w\d\-]+))?$/.exec(event_name))
+                // RegExp for "event" or "event.namespace" (az or az.*).
+                (event_name = /^([a-z]+)(\.(.+))?$/.exec(event_name))
             ) {
 
                 if (
