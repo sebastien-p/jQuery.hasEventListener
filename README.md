@@ -21,6 +21,13 @@ Usage
 * `$("selector").hasEventListener("event");` : jQuery chainable object
 * `$("selector").hasEventListener("event.namespace");` : jQuery chainable object
 
+1.1 roadmap
+------------
+* $.hasEventListener(dom_element, event_handler);
+* $.hasEventListener(dom_element, event_name, event_handler);
+* $("selector").hasEventListener(event_handler);
+* $("selector").hasEventListener(event_name, event_handler);
+
 Licence
 --------
 Copyright (c) 2010 Sebastien P.
