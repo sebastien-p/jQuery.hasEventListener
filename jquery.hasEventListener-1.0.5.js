@@ -10,6 +10,8 @@
 
    ---
 
+   Version 1.0.5 - Jan. 8, 2011
+
    A jQuery plugin which tests if a jQuery element
    actually has a particular event listener bound.
 
