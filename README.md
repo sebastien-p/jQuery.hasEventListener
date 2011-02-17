@@ -4,7 +4,7 @@
 Description
 ------------
 A jQuery plugin which tests if a dom element actually has a particular event listener bound to it.
-More infos ? [https://twitter.com/#!/search/_sebastienp%20hasEventListener](https://twitter.com/#!/search/_sebastienp%20hasEventListener)
+[More infos ?](https://twitter.com/#!/search/_sebastienp%20hasEventListener)
 
 Demo
 -----
@@ -27,6 +27,11 @@ A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB/](http://
 * `jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])` --> Boolean  
 * `:hasEventListener[([mode][type][namespace])] Selector` --> jQuery object
 * `.hasEventListener([mode][type][namespace], [handler])` --> jQuery object
+
+They talked about "hasEventListener"
+-------------------------------------
+* [http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration](http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration)
+* [http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu](http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu)
 
 Licence
 --------
