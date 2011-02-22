@@ -21,8 +21,8 @@ Setup
         <body>
             <!-- Some HTML tags -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
-            <script scr="jquery.hasEventListener-2.0.0rc1.min.js"></script>
-            <!-- Some other jQuery plugins and/or scripts, order is important ! -->
+            <script scr="jquery.hasEventListener-2.0.0.min.js"></script>
+            <!-- Some other jQuery plugins and/or scripts, order matters ! -->
         </body>
     </html>
 
@@ -49,11 +49,13 @@ Setup
 * `:hasEventListener[([mode][type][namespace])] Selector` --> jQuery object
 * `.hasEventListener([mode][type][namespace], [handler])` --> jQuery object
 
+**Important note :**  `handler` associated with `mode` currently only works with jQuery 1.4.2+
+
 2.0.0 API examples
 -------------------
-*  Example 1 : `$.hasEventListener($("#tabs li")[0], "!delegate click.tab_widget");` returns `true` or `false`.
-*  Example 2 : `$("#tabs li:hasEventListener(!delegate click.tab_widget)");` returns a new jQuery object.
-*  Example 3 : `$("#tabs li").hasEventListener("!delegate click.tab_widget");` returns a new jQuery object.
+* `$.hasEventListener($("#tabs li")[0], "!delegate click.tab_widget");` returns `true` or `false`.
+* `$("#tabs li:hasEventListener(!delegate click.tab_widget)");` returns a new jQuery object.
+* `$("#tabs li").hasEventListener("!delegate click.tab_widget");` returns a new jQuery object.
 
 They talked about "hasEventListener"
 -------------------------------------
