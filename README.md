@@ -40,14 +40,14 @@ Setup
 
 2.0.0 API roadmap
 ------------------
-* `jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])` --> Boolean
-* `:hasEventListener[([mode][type][namespace])] Selector` --> jQuery object
-* `.hasEventListener([mode][type][namespace], [handler])` --> jQuery object
-
     mode : (String) "!live" or "!delegate", for live/delegated event presence test.
     type : (String) type of the event to test presence for. e.g. "click".
     namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
     handler : (Function) event handler to test presence for.
+
+* `jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])` --> Boolean
+* `:hasEventListener[([mode][type][namespace])] Selector` --> jQuery object
+* `.hasEventListener([mode][type][namespace], [handler])` --> jQuery object
 
 2.0.0 API examples
 -------------------
