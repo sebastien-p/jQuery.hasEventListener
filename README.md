@@ -1,4 +1,4 @@
-"hasEventListener" plugin for [jQuery](http://jquery.com/) (tested and working with 1.2.3+)
+"hasEventListener" plugin for [jQuery](http://jquery.com/) (version 1.2.3+ tested)
 ================================
 
 Description
@@ -8,7 +8,23 @@ A jQuery plugin which tests if a dom element actually has a particular event lis
 
 Demo
 -----
-A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB/](http://jsfiddle.net/sebastienp/eHGqB/)
+A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB/]()
+
+Setup
+------
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <title>Page title</title>
+        </head>
+        <body>
+            <!-- Some HTML tags -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+            <script scr="jquery.hasEventListener-2.0.0rc1.min.js"></script>
+            <!-- Some other jQuery plugins and/or scripts, order is important ! -->
+        </body>
+    </html>
 
 1.0.5 Usage
 ------------
@@ -24,14 +40,33 @@ A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB/](http://
 
 2.0.0 Roadmap
 --------------
-* `jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])` --> Boolean  
-* `:hasEventListener[([mode][type][namespace])] Selector` --> jQuery object
-* `.hasEventListener([mode][type][namespace], [handler])` --> jQuery object
+* 'jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])
+  --> boolean
+
+  mode : (String) "!live" or "!delegate", for live/delegated event presence test.
+  type : (String) type of the event to test presence for. e.g. "click".
+  namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
+  handler : (Function) event handler to test presence for.'
+
+* ':hasEventListener[([mode][type][namespace])] Selector
+  --> jQuery object
+
+  mode : (String) "!live" or "!delegate", for live/delegated event test.
+  type : (String) type of the event to test presence for. e.g. "click".
+  namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".'
+
+* '.hasEventListener([mode][type][namespace], [handler])
+  --> jQuery object
+
+  mode : (String) "!live" or "!delegate", for live/delegated event presence test.
+  type : (String) type of the event to test presence for. e.g. "click".
+  namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
+  handler : (Function) event handler to test presence for.'
 
 They talked about "hasEventListener"
 -------------------------------------
-* [http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration](http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration)
-* [http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu](http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu)
+* [http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration]()
+* [http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu]()
 
 Licence
 --------
