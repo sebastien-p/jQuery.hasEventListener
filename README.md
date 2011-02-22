@@ -49,6 +49,8 @@ Setup
     namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
     handler : (Function) event handler to test presence for.
 
+2.0.0 API examples
+-------------------
 *  Example 1 : `$.hasEventListener($("#tabs li")[0], "!delegate click.tab_widget");` returns `true` or `false`.
 *  Example 2 : `$("#tabs li:hasEventListener(!delegate click.tab_widget)");` returns a new jQuery object.
 *  Example 3 : `$("#tabs li").hasEventListener("!delegate click.tab_widget");` returns a new jQuery object.
