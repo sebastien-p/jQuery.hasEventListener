@@ -40,16 +40,16 @@ Setup
 
 2.0.0 API roadmap
 ------------------
-    mode : (String) "!live" or "!delegate", for live/delegated event presence test.
-    type : (String) type of the event to test presence for. e.g. "click".
-    namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
-    handler : (Function) event handler to test presence for.
+    mode: (String) "!live" or "!delegate", for live/delegated event presence test.
+    type: (String) type of the event to test presence for. e.g. "click".
+    namespace: (String) namespace of the event to test presence for. e.g. ".namespaced".
+    handler: (Function) event handler to test presence for.
 
 * `jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])` --> Boolean
 * `:hasEventListener[([mode][type][namespace])] Selector` --> jQuery object
 * `.hasEventListener([mode][type][namespace], [handler])` --> jQuery object
 
-**Important note :**  `handler` associated with `mode` currently only works with jQuery 1.4.2+
+**Important note :**  `handler` used with `mode` currently only works with jQuery 1.4.2+.
 
 2.0.0 API examples
 -------------------
