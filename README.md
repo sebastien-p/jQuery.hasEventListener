@@ -38,9 +38,10 @@ Setup
 * `$("selector").hasEventListener("event");` --> jQuery object
 * `$("selector").hasEventListener("event.namespace");` --> jQuery object
 
-2.0.0 Roadmap
---------------
-*
+2.0.0 API roadmap
+------------------
+*  Example : '$.hasEventListener($("#tabs li")[0], "!delegate click.tab_widget");' returns 'true' or 'false'.
+
     jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])
     --> boolean
 
@@ -49,7 +50,8 @@ Setup
     namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
     handler : (Function) event handler to test presence for.
 
-*
+*  Example : '$("#tabs li:hasEventListener(!delegate click.tab_widget)");' returns a new jQuery object.
+
     :hasEventListener[([mode][type][namespace])] Selector
     --> jQuery object
 
@@ -57,7 +59,8 @@ Setup
     type : (String) type of the event to test presence for. e.g. "click".
     namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
 
-*
+*  Example : '$("#tabs li").hasEventListener("!delegate click.tab_widget");' returns a new jQuery object.
+
     .hasEventListener([mode][type][namespace], [handler])
     --> jQuery object
 
