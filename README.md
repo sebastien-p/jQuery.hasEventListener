@@ -40,34 +40,18 @@ Setup
 
 2.0.0 API roadmap
 ------------------
-*  Example : '$.hasEventListener($("#tabs li")[0], "!delegate click.tab_widget");' returns 'true' or 'false'.
-
-    jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])
-    --> boolean
-
-    mode : (String) "!live" or "!delegate", for live/delegated event presence test.
-    type : (String) type of the event to test presence for. e.g. "click".
-    namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
-    handler : (Function) event handler to test presence for.
-
-*  Example : '$("#tabs li:hasEventListener(!delegate click.tab_widget)");' returns a new jQuery object.
-
-    :hasEventListener[([mode][type][namespace])] Selector
-    --> jQuery object
-
-    mode : (String) "!live" or "!delegate", for live/delegated event test.
-    type : (String) type of the event to test presence for. e.g. "click".
-    namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
-
-*  Example : '$("#tabs li").hasEventListener("!delegate click.tab_widget");' returns a new jQuery object.
-
-    .hasEventListener([mode][type][namespace], [handler])
-    --> jQuery object
+* `jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])` --> Boolean
+* `:hasEventListener[([mode][type][namespace])] Selector` --> jQuery object
+* `.hasEventListener([mode][type][namespace], [handler])` --> jQuery object
 
     mode : (String) "!live" or "!delegate", for live/delegated event presence test.
     type : (String) type of the event to test presence for. e.g. "click".
     namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
     handler : (Function) event handler to test presence for.
+
+*  Example 1 : `$.hasEventListener($("#tabs li")[0], "!delegate click.tab_widget");` returns `true` or `false`.
+*  Example 2 : `$("#tabs li:hasEventListener(!delegate click.tab_widget)");` returns a new jQuery object.
+*  Example 3 : `$("#tabs li").hasEventListener("!delegate click.tab_widget");` returns a new jQuery object.
 
 They talked about "hasEventListener"
 -------------------------------------
