@@ -40,28 +40,31 @@ Setup
 
 2.0.0 Roadmap
 --------------
-* 'jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])
-  --> boolean
+*
+    jQuery.hasEventListener(dom_element, [mode][type][namespace], [handler])
+    --> boolean
 
-  mode : (String) "!live" or "!delegate", for live/delegated event presence test.
-  type : (String) type of the event to test presence for. e.g. "click".
-  namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
-  handler : (Function) event handler to test presence for.'
+    mode : (String) "!live" or "!delegate", for live/delegated event presence test.
+    type : (String) type of the event to test presence for. e.g. "click".
+    namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
+    handler : (Function) event handler to test presence for.
 
-* ':hasEventListener[([mode][type][namespace])] Selector
-  --> jQuery object
+*
+    :hasEventListener[([mode][type][namespace])] Selector
+    --> jQuery object
 
-  mode : (String) "!live" or "!delegate", for live/delegated event test.
-  type : (String) type of the event to test presence for. e.g. "click".
-  namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".'
+    mode : (String) "!live" or "!delegate", for live/delegated event test.
+    type : (String) type of the event to test presence for. e.g. "click".
+    namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
 
-* '.hasEventListener([mode][type][namespace], [handler])
-  --> jQuery object
+*
+    .hasEventListener([mode][type][namespace], [handler])
+    --> jQuery object
 
-  mode : (String) "!live" or "!delegate", for live/delegated event presence test.
-  type : (String) type of the event to test presence for. e.g. "click".
-  namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
-  handler : (Function) event handler to test presence for.'
+    mode : (String) "!live" or "!delegate", for live/delegated event presence test.
+    type : (String) type of the event to test presence for. e.g. "click".
+    namespace : (String) namespace of the event to test presence for. e.g. ".namespaced".
+    handler : (Function) event handler to test presence for.
 
 They talked about "hasEventListener"
 -------------------------------------
@@ -72,7 +75,7 @@ Licence
 --------
 Copyright (c) 2011 Sebastien P.
 
-[http://twitter.com/_sebastienp](http://twitter.com/_sebastienp)
+[http://twitter.com/_sebastienp]()
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
