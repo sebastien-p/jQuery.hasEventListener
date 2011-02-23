@@ -8,7 +8,7 @@ A jQuery plugin which tests if a dom element actually has a particular event lis
 
 Demo
 -----
-A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB](http://jsfiddle.net/sebastienp/eHGqB/)
+A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB](http://jsfiddle.net/sebastienp/eHGqB/).
 
 Setup
 ------
@@ -64,12 +64,12 @@ Setup
 
 They talked about "hasEventListener"
 -------------------------------------
-* [http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration](http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration)
-* [http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu](http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu)
+* [http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration](http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration).
+* [http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu](http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu).
 
 Special thanks
 ---------------
-* Julian Jelfs ([Blog](http://julianjelfs.wordpress.com/)/[Twitter](http://twitter.com/julianjelfs)).
+* Julian Jelfs ([Blog](http://julianjelfs.wordpress.com/) - [Twitter](http://twitter.com/julianjelfs)).
 
 Licence
 --------
