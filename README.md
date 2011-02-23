@@ -51,6 +51,7 @@ Setup
 * `.hasEventListener([mode][type][namespace], [handler])` --> jQuery object
 
 **Important notes :**
+
 * `handler` used with `mode` currently only works with jQuery 1.4.2+.
 
 2.0.0 API examples
@@ -68,7 +69,7 @@ They talked about "hasEventListener"
 
 Special thanks
 ---------------
-* Julian Jelfs - [Blog](http://julianjelfs.wordpress.com/) - [Twitter](http://twitter.com/julianjelfs)
+* Julian Jelfs ([Blog](http://julianjelfs.wordpress.com/)/[Twitter](http://twitter.com/julianjelfs)).
 
 Licence
 --------
