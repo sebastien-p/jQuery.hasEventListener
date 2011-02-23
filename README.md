@@ -1,4 +1,4 @@
-"hasEventListener" plugin for [jQuery][http://jquery.com/] (version 1.2.3+ tested)
+"hasEventListener" plugin for [jQuery](http://jquery.com/) (version 1.2.3+ tested)
 ================================
 
 Description
@@ -8,7 +8,7 @@ A jQuery plugin which tests if a dom element actually has a particular event lis
 
 Demo
 -----
-A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB/][]
+A quick demo is available here : [http://jsfiddle.net/sebastienp/eHGqB/](http://jsfiddle.net/sebastienp/eHGqB/)
 
 Setup
 ------
@@ -59,14 +59,14 @@ Setup
 
 They talked about "hasEventListener"
 -------------------------------------
-* [http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration][]
-* [http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu][]
+* [http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration](http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration)
+* [http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu](http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu)
 
 Licence
 --------
 Copyright (c) 2011 Sebastien P.
 
-[](http://twitter.com/_sebastienp)
+[http://twitter.com/_sebastienp](http://twitter.com/_sebastienp)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
