@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>jQuery hasEventListener plugin homemade tests</title>
+		<style>
+			ul {
+				float: left;
+				list-style: none;
+				padding: 0 1.5em 0 0
+			}
+			hr {
+				border: 0;
+				border-bottom: .1em dashed #999
+			}
+			#test {
+				background: #ddd;
+				border: .1em solid #333;
+				display: inline-block;
+				padding: .5em
+			}
+			#test:hover {
+				background: #eee;
+				cursor: pointer
+			}
+			.green { color: #090 }
+			.red { color: #900 }
+		</style>
+	</head>
+	<body>
+		<form>
+			<label for="jQuery_version">Pick a jQuery version</label>
+			<select id="jQuery_version" name="jQuery" tabIndex="1">
+				<option selected>1.5.1</option>
+				<!-- 1.5.0 has a local AJAX bug -->
+				<option>1.4.4</option>
+				<option>1.4.3</option>
+				<option>1.4.2</option>
+				<option>1.4.1</option>
+				<option>1.4.0</option>
+				<option>1.3.2</option>
+				<option>1.3.1</option>
+				<option>1.3.0</option>
+				<option>1.2.6</option>
+				<option>1.2.3</option>
+			</select>
+			<input id="submit_button" type="submit" value="OK" tabIndex="2" disabled/>
+		</form>
+		<hr/>
+		<p><span id="test">Element</span> &lt;== Open a JavaScript console and click it !</p>
+		<hr/>
+		<script id="jQuery" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+		<script>
+            (function (WINDOW, LOCATION, SELECTED, DISABLED) {
+
+                "use strict";
+
+                $(function () {
+
+                    var ajax_defaults = {
+                            cache: true,
+                            dataType: "script",
+                            error: function () {
+
+                                if (WINDOW.confirm("AJAX request failed, do you want to reload the page ?")) {
+
+                                    LOCATION.reload();
+
+                                }
+
+                            }
+                        },
+                        jQuery = $("#jQuery"),
+                        jQuery_source = jQuery.attr("src"),
+                        submit_button = $("#submit_button"),
+                        jQuery_version = $("#jQuery_version").bind("change.sebastienp", function () {
+
+                            submit_button.is(":" + DISABLED) && submit_button.removeAttr(DISABLED);
+
+                        }),
+                        query_string = LOCATION.search,
+                        regexp = /(\d+\.?)+/,
+                        version;
+
+                    function load_plugin_and_log() {
+
+                        $.ajax($.extend({}, ajax_defaults, {
+                            url: "../jquery.hasEventListener-2.0.0.js",
+                            success: function () {
+
+                                var handler = function (e) {
+
+                                        var namespace = e.handleObj;
+
+                                        WINDOW.console.log(+new WINDOW.Date() + " : " + e.type +
+                                            (((namespace = (namespace && namespace.namespace) || e.handler.type)) ? "." + namespace : ""));
+
+                                    },
+                                    span = $("#test").bind("click.namespace", handler),
+                                    body = $("body");
+
+                                function test(description, handler) {
+
+                                    var argument,
+                                        iterator = -1,
+                                        length = arguments.length,
+                                        to_return = '<li class="' + (($.hasEventListener(span, description, handler)) ? "green" : "red") + '">element';
+
+                                    while ((iterator += 1) < length) {
+
+                                        to_return += (", " + ((typeof (argument = arguments[iterator]) === "function") ? "handler" : argument));
+
+                                    }
+
+                                    return (to_return + '</li>');
+
+                                }
+
+                                $.fn.live && span.live("click.live_namespace", handler);
+                                $.fn.delegate && body.delegate("#test", "click.delegate_namespace", handler);
+                                span = span[0];
+
+                                jQuery.before('<ul>' +
+
+                                    test() +
+                                    test(handler) + 
+                                    test("click") +
+                                    test(".namespace") +
+                                    test("click.namespace") +
+                                    test("click", handler) +
+                                    test(".namespace", handler) +
+                                    test("click.namespace", handler) +
+
+                                    "</ul><ul>" +
+
+                                    test("!live") +
+                                    test("!live", handler) + 
+                                    test("!live click") +
+                                    test("!live .live_namespace") +
+                                    test("!live click.live_namespace") +
+                                    test("!live click", handler) +
+                                    test("!live .live_namespace", handler) +
+                                    test("!live click.live_namespace", handler) +
+
+                                    "</ul><ul>" +
+
+                                    test("!delegate") +
+                                    test("!delegate", handler) + 
+                                    test("!delegate click") +
+                                    test("!delegate .delegate_namespace") +
+                                    test("!delegate click.delegate_namespace") +
+                                    test("!delegate click", handler) +
+                                    test("!delegate .delegate_namespace", handler) +
+                                    test("!delegate click.delegate_namespace", handler) +
+
+                                    "</ul>");
+
+                                WINDOW.sebastienp = {
+                                    span: span,
+                                    body: body[0],
+                                    handler: handler
+                                };
+
+                            }
+                        }));
+
+                    }
+
+                    if (
+                        query_string &&
+                            (version = /jQuery=([\d.]+)/.exec(query_string)) &&
+                                ((version = version[1]) !== regexp.exec(jQuery_source)[0])
+                    ) {
+
+                        $.ajax($.extend({}, ajax_defaults, {
+                            url: jQuery_source.replace(regexp, version),
+                            success: function () {
+
+                                jQuery_version
+                                    .find(":" + SELECTED).removeAttr(SELECTED)
+                                    .siblings(":contains(" + version + ")").attr(SELECTED, SELECTED);
+
+                                load_plugin_and_log();
+
+                            }
+                        }));
+
+                    } else {
+
+                        load_plugin_and_log();
+
+                    }
+
+                });
+
+            }(this, this.location, "selected", "disabled"));
+		</script>
+	</body>
+</html>
