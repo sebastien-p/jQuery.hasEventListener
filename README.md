@@ -4,8 +4,8 @@
 Description
 -----------
 
-`hasEventListener` is a (about 2kB minified and 1kB gzipped) jQuery plugin which checks if an Object or a DOM element actually
-has a particular event listener bound to it. [More infos ?](https://twitter.com/#!/search/_sebastienp%20hasEventListener)
+`hasEventListener` is a (about 2kB minified and 1kB gzipped) jQuery plugin which checks if an Object or a DOM element actually has
+a particular/live/delegated event listener bound to it. [More infos ?](https://twitter.com/#!/search/_sebastienp%20hasEventListener)
 
 As a bonus, `hasEventListener` also exposes two new jQuery methods called `getEventsData` whose can be used as a 1.2.3+ compatible
 way to get events data internally stored on an element by jQuery (please, see related examples and API/documentation below).
@@ -41,7 +41,7 @@ Go ahead, it could save me a lof of time ! Feel free to fork it,send me your wor
 Demo
 ----
 
-A quick demo that you even can play with is available [here on jsFiddle](http://jsfiddle.net/sebastienp/eHGqB/).
+A quick demo that you even can play with is available [here on jsFiddle](will_be_back_soon).
 
 
 Setup (HTML5 not required)
@@ -99,11 +99,12 @@ Examples/Usage
 * `$("*").getEventsData();` returns an object or `undefined`.
 
 
-They talked about "hasEventListener"
-------------------------------------
+They use and/or talked about `hasEventListener`
+-----------------------------------------------
 
 * [jQuery hasEventListener and developer collaboration](http://sullerton.com/2011/01/jquery-haseventlistener-and-developer-collaboration/).
 * [jQuery fancy select dropdown menu](http://snipplr.com/view/48107/jquery-fancy-select-dropdown-menu).
+* [RPC Browser XBMC](http://code.google.com/p/rpc-browser-xbmc/source/browse/trunk/script.rpc.browser/).
 
 
 Special thanks
