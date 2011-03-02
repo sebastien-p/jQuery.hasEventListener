@@ -26,7 +26,7 @@
 
    ---
 
-   Version 2.0.0 - Mar. 01, 2011.
+   Version 2.0.1 - Mar. 02, 2011.
 
    "hasEventListener" is a (about 2kB minified and 1kB gzipped) jQuery plugin which
    checks if an Object or a DOM element actually has a particular event listener bound to it.
@@ -60,16 +60,9 @@
 
 */
 
-(function (PLUGIN_NAME, BONUS_NAME, EVENTS, LIVE, DATA, $, TRUE, UNDEFINED) {
+(function (PLUGIN_NAME, BONUS_NAME, EVENTS, LIVE, DATA, STRING, $, TRUE, UNDEFINED) {
 
     "use strict";
-
-    // Only search for events on "window", the "document", plain objects and HTML elements.
-    function get_valid_types_first_letter(object) {
-
-        return (/Object|(Ele|Docu)ment|Window/.exec(Object.prototype.toString.call(object)) || [""])[0][0];
-
-    }
 
     function is_valid(argument, type) {
 
@@ -77,6 +70,20 @@
 
         // Returns "true" only if "argument" is a function or a plain string.
         return !!((type) ? to_return && $.trim(argument) : to_return);
+
+    }
+
+    // Only search for events on "window", the "document", plain objects and HTML elements.
+    function get_valid_types_first_letter(object) {
+
+        // Some recent browsers will correctly handle that ...
+        var first_try = (/Object|(Ele|Docu)ment|Window/.exec(Object.prototype.toString.call(object)) || [""])[0][0],
+            node_type;
+
+        // ... and some others won't so this workaround is needed
+        return ((first_try === "O") ? (!object.jquery && (((node_type = object.nodeType) &&
+            (object.documentElement || (is_valid(object.tagName, STRING) && $(object).is(object.tagName)))) ?
+                ((node_type === 1) && "E") || ((node_type === 9) && "D") : ((object.setInterval) ? "W" : "0"))) : first_try);
 
     }
 
@@ -135,7 +142,7 @@
             // There actually is some events data on this "element".
             (data = compatibility.get_events_data(element)) &&
              // "key" is defined and valid so get the associated data.
-            (key !== UNDEFINED) && is_valid(key, "string") && (data = data[key]);
+            (key !== UNDEFINED) && is_valid(key, STRING) && (data = data[key]);
 
         return data;
 
@@ -211,7 +218,7 @@
                 }).length > 1
             ) {
 
-                if (is_valid(event_description, "string")) {
+                if (is_valid(event_description, STRING)) {
 
                     // "event_description" must be a well-formed string regarding the API : "!mode type.namespace".
                     if ((event_description = /^(!(delegate|live) ?)?([a-z_]+)?(\.([^\s]+))?$/.exec(event_description))) {
@@ -369,7 +376,7 @@
 
                 // Filters the set two times : only get elements with an [event_type] event bound and then those with a "live" event bound.
                 // If "live" events data found, only run tests on "live" events.
-                )[PLUGIN_NAME](event_type)[PLUGIN_NAME](LIVE)[BONUS_NAME](LIVE)) && (run_tests = run_tests_on_one_event);
+                )[PLUGIN_NAME](event_type || UNDEFINED)[PLUGIN_NAME](LIVE)[BONUS_NAME](LIVE)) && (run_tests = run_tests_on_one_event);
 
             }
 
@@ -434,4 +441,4 @@
 
     };
 
-}("hasEventListener", "getEventsData", "events", "live", "data", jQuery, !0));
+}("hasEventListener", "getEventsData", "events", "live", "data", "string", jQuery, !0));
