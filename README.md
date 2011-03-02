@@ -4,7 +4,7 @@
 Description
 -----------
 
-`hasEventListener` is a (about 2kB minified and 1kB gzipped) jQuery plugin which checks if an Object or a DOM element actually has
+`hasEventListener` is a (about 2.1kB minified and 1kB gzipped) jQuery plugin which checks if an Object or a DOM element actually has
 a particular/live/delegated event listener bound to it. [More infos ?](https://twitter.com/#!/search/_sebastienp%20hasEventListener)
 
 As a bonus, `hasEventListener` also exposes two new jQuery methods called `getEventsData` whose can be used as a 1.2.3+ compatible

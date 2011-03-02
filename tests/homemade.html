@@ -32,7 +32,7 @@
 			<label for="jQuery_version">Pick a jQuery version</label>
 			<select id="jQuery_version" name="jQuery" tabIndex="1">
 				<option selected>1.5.1</option>
-				<!-- 1.5.0 has a local AJAX bug -->
+				<option>1.5.0</option><!-- 1.5.0 has a local AJAX bug -->
 				<option>1.4.4</option>
 				<option>1.4.3</option>
 				<option>1.4.2</option>
@@ -85,7 +85,8 @@
                     function load_plugin_and_log() {
 
                         $.ajax($.extend({}, ajax_defaults, {
-                            url: "../jquery.hasEventListener-2.0.0.js",
+                            url:"https://github.com/sebastien-p/jquery.hasEventListener/raw/master/jquery.hasEventListener-2.0.1.min.js",
+                            //url: "../jquery.hasEventListener-2.0.1.js",
                             success: function () {
 
                                 var handler = function (e) {
