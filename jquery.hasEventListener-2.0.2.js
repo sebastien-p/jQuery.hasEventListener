@@ -26,7 +26,7 @@
 
    ---
 
-   Version 2.0.1 - Mar. 02, 2011.
+   Version 2.0.2 - Mar. 03, 2011.
 
    "hasEventListener" is a (about 2kB minified and 1kB gzipped) jQuery plugin which
    checks if an Object or a DOM element actually has a particular event listener bound to it.
@@ -376,7 +376,7 @@
 
                 // Filters the set two times : only get elements with an [event_type] event bound and then those with a "live" event bound.
                 // If "live" events data found, only run tests on "live" events.
-                )[PLUGIN_NAME](event_type || UNDEFINED)[PLUGIN_NAME](LIVE)[BONUS_NAME](LIVE)) && (run_tests = run_tests_on_one_event);
+                )[PLUGIN_NAME](LIVE)[BONUS_NAME](LIVE)) && (run_tests = run_tests_on_one_event);
 
             }
 
