@@ -26,7 +26,7 @@
 
    ---
 
-   Version 2.0.2 - Mar. 03, 2011.
+   Version 2.0.3 - Mar. 10, 2011.
 
    "hasEventListener" is a (about 2kB minified and 1kB gzipped) jQuery plugin which
    checks if an Object or a DOM element actually has a particular event listener bound to it.
@@ -83,7 +83,7 @@
         // ... and some others won't so this workaround is needed
         return ((first_try === "O") ? (!object.jquery && (((node_type = object.nodeType) &&
             (object.documentElement || (is_valid(object.tagName, STRING) && $(object).is(object.tagName)))) ?
-                ((node_type === 1) && "E") || ((node_type === 9) && "D") : ((object.setInterval) ? "W" : "0"))) : first_try);
+                ((node_type === 1) && "E") || ((node_type === 9) && "D") : ((object.setInterval) ? "W" : "O"))) : first_try);
 
     }
 
@@ -364,15 +364,15 @@
             // Get live/delegated events datas.
             } else {
 
-                // Live events are always and only bound to the document.
-                (event_listeners = $(document).add(
+                (event_listeners = (
 
-                    // Delegated events are kind of live ones whose can be bound to the "document", "window" and HTML elements.
-                    ((event_mode !== LIVE) && (tested_type !== "D")) ? (tested_type === "W") ?
-                        tested_element : (((tested_element = $(tested_element)).is("html")) ?
+                    // Live events are always and only bound to the document.
+                    ((tested_type !== "D") && (tested_type !== "W")) ?
+                        // Delegated events are kind of live ones whose can be bound to the "document", "window" and HTML elements.
+                        $(document).add((event_mode !== LIVE) ? (((tested_element = $(tested_element)).is("html")) ?
                             // If the HTML element is not the "html" tag, get his parents.
                             // Always add "widow" to the set if "tested_element" is a HTML element.
-                            tested_element : tested_element.parents(":not(html)").andSelf()).add(window) : UNDEFINED
+                            tested_element : tested_element.parents(":not(html)").andSelf()).add(window) : UNDEFINED) : $(tested_element)
 
                 // Filters the set two times : only get elements with an [event_type] event bound and then those with a "live" event bound.
                 // If "live" events data found, only run tests on "live" events.
