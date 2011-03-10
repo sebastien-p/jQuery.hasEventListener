@@ -41,7 +41,7 @@ Go ahead, it could save me a lof of time ! Feel free to fork it,send me your wor
 Demo
 ----
 
-A quick demo that you even can play with is available [here on jsFiddle](http://jsfiddle.net/2Gy8U/1/).
+A quick demo that you even can play with is available [here on jsFiddle](http://jsfiddle.net/2Gy8U/5/).
 
 
 Setup (HTML5 not required)
