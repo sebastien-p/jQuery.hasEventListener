@@ -66,9 +66,9 @@ API/Documentation
 -----------------
 
     tested: (DOM Element or plain Object) where to check for event presence.
-    mode: (String, `/!(live|delegate)/`) for live/delegated event presence test.
-    type: (String, `/[a-z_]+/`) type of the event to test presence for. e.g. `click`
-    namespace: (String, `/\.[^\s]+/`) namespace of the event to test presence for. e.g. `.namespace`.
+    mode: (String, "/!(live|delegate)/") for live/delegated event presence test.
+    type: (String, "/[a-z_]+/") type of the event to test presence for. e.g. "click"
+    namespace: (String, "/\.[^\s]+/") namespace of the event to test presence for. e.g. ".namespace".
     handler: (Function) event handler to test presence for.
     element: (DOM Element/Window or plain Object) where to get the events data.
     key: (String) type of the event data to get.
@@ -97,6 +97,15 @@ Examples/Usage
 * `$({}).bind("custom", function () {}).hasEventListener("custom");` returns a jQuery object.
 * `$.getEventsData(window, "scroll");` returns an object or `undefined`.
 * `$("*").getEventsData();` returns an object or `undefined`.
+
+
+ChangeLog
+---------
+
+* 2.0.3 : Checking on plain objects and delegated events bugs corrected.
+* 2.0.2 : Custom events checking bug corrected.
+* 2.0.1 : Major Internet Explorer compatibility changes.
+* 2.0.0 : Complete rewrite, new API, please forget about anterior versions.
 
 
 They use and/or talked about `hasEventListener`
