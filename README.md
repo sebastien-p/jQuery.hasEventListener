@@ -35,13 +35,13 @@ Contact me via [Twitter](http://twitter.com/_sebastienp) or use Github's dedicat
 
 **You are a developer and can improve `hasEventListener` by yourself ?**
 
-Go ahead, it could save me a lof of time ! Feel free to fork it,send me your work or a pull request on Github or whatever ...
+Go ahead, it could save me a lof of time ! Feel free to fork it, send me your work or a pull request on Github or whatever ...
 
 
 Demo
 ----
 
-A quick demo that you even can play with is available [here on jsFiddle](http://jsfiddle.net/2Gy8U/5/).
+A quick demo that you even can play with is available [here on jsFiddle](http://jsfiddle.net/sebastienp/eHGqB/).
 
 
 Setup (HTML5 not required)
@@ -56,7 +56,7 @@ Setup (HTML5 not required)
         <body>
             <!-- Some HTML tags -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
-            <script scr="jquery.hasEventListener-2.0.0.min.js"></script>
+            <script scr="jquery.hasEventListener-2.1.0.min.js"></script>
             <!-- Some other jQuery plugins and/or scripts, order matters ! -->
         </body>
     </html>
@@ -65,8 +65,8 @@ Setup (HTML5 not required)
 API/Documentation
 -----------------
 
-    tested: (DOM Element or plain Object) where to check for event presence.
-    mode: (String, "/!(live|delegate)/") for live/delegated event presence test.
+    tested: (DOM Element or plain Object) where to check event presence for.
+    mode: (String, "/(delegat|liv|toggl)e|hover)!/") if the event was bound using one of these methods.
     type: (String, "/[a-z_]+/") type of the event to test presence for. e.g. "click"
     namespace: (String, "/\.[^\s]+/") namespace of the event to test presence for. e.g. ".namespace".
     handler: (Function) event handler to test presence for.
@@ -90,9 +90,14 @@ API/Documentation
 Examples/Usage
 --------------
 
-* `$.hasEventListener($("#tabs li")[0], "!delegate click.tab_widget");` returns `true` or `false`.
-* `$("#tabs li:hasEventListener(!delegate click.tab_widget)");` returns a jQuery object.
-* `$("#tabs li").hasEventListener("!delegate click.tab_widget");` returns a jQuery object.
+* `$.hasEventListener($("#tabs li")[0], "delegate!click.tab_widget");` returns `true` or `false`.
+* `$("#tabs li:hasEventListener(delegate!click.tab_widget)");` returns a jQuery object.
+* `$("#tabs li").hasEventListener("delegate!click.tab_widget");` returns a jQuery object.
+* `$.hasEventListener($("span")[0], "live!");` returns `true` or `false`.
+* `$("span:hasEventListener(.my_namespace)");` returns a jQuery object.
+* `$("span").hasEventListener("live!.my_namespace");` returns a jQuery object.
+* `$.hasEventListener(document, "hover!");` returns `true` or `false`.
+* `$(window).hasEventListener("toggle!", function () {});` returns a jQuery object.
 * `$.hasEventListener($({}).bind("custom_event", function () {})[0], "custom_event");` returns `true`.
 * `$({}).bind("custom", function () {}).hasEventListener("custom");` returns a jQuery object.
 * `$.getEventsData(window, "scroll");` returns an object or `undefined`.
@@ -102,6 +107,7 @@ Examples/Usage
 ChangeLog
 ---------
 
+* 2.1.0 : "!mode " is now "mode!", "toggle" and "hover" shortcuts added.
 * 2.0.3 : Checking on plain objects and delegated events bugs corrected.
 * 2.0.2 : Custom events checking bug corrected.
 * 2.0.1 : Major Internet Explorer compatibility changes.
