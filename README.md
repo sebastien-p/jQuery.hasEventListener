@@ -66,7 +66,7 @@ API/Documentation
 -----------------
 
     tested: (DOM Element or plain Object) where to check event presence for.
-    mode: (String, "/(delegat|liv|toggl)e|hover)!/") if the event was bound using one of these methods.
+    mode: (String, "/!(delegat|liv)e/") if the event was bound using one of these jQuery methods.
     type: (String, "/[a-z_]+/") type of the event to test presence for. e.g. "click"
     namespace: (String, "/\.[^\s]+/") namespace of the event to test presence for. e.g. ".namespace".
     handler: (Function) event handler to test presence for.
