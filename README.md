@@ -90,14 +90,12 @@ API/Documentation
 Examples/Usage
 --------------
 
-* `$.hasEventListener($("#tabs li")[0], "delegate!click.tab_widget");` returns `true` or `false`.
-* `$("#tabs li:hasEventListener(delegate!click.tab_widget)");` returns a jQuery object.
-* `$("#tabs li").hasEventListener("delegate!click.tab_widget");` returns a jQuery object.
-* `$.hasEventListener($("span")[0], "live!");` returns `true` or `false`.
+* `$.hasEventListener($("#tabs li")[0], "!delegate click.tab_widget");` returns `true` or `false`.
+* `$("#tabs li:hasEventListener(!delegate click.tab_widget)");` returns a jQuery object.
+* `$("#tabs li").hasEventListener("!delegate click.tab_widget");` returns a jQuery object.
+* `$.hasEventListener($("span")[0], "!live");` returns `true` or `false`.
 * `$("span:hasEventListener(.my_namespace)");` returns a jQuery object.
-* `$("span").hasEventListener("live!.my_namespace");` returns a jQuery object.
-* `$.hasEventListener(document, "hover!");` returns `true` or `false`.
-* `$(window).hasEventListener("toggle!", function () {});` returns a jQuery object.
+* `$("span").hasEventListener("!live .my_namespace");` returns a jQuery object.
 * `$.hasEventListener($({}).bind("custom_event", function () {})[0], "custom_event");` returns `true`.
 * `$({}).bind("custom", function () {}).hasEventListener("custom");` returns a jQuery object.
 * `$.getEventsData(window, "scroll");` returns an object or `undefined`.
@@ -107,11 +105,16 @@ Examples/Usage
 ChangeLog
 ---------
 
-* 2.1.0 : "!mode " is now "mode!", "toggle" and "hover" shortcuts added.
 * 2.0.3 : Checking on plain objects and delegated events bugs corrected.
 * 2.0.2 : Custom events checking bug corrected.
 * 2.0.1 : Major Internet Explorer compatibility changes.
 * 2.0.0 : Complete rewrite, new API, please forget about anterior versions.
+
+
+2.1.0 Roadmap
+-------------
+
+API changes : `!mode ` will be `mode!`, `toggle` and `hover` shortcuts will be added.
 
 
 They use and/or talked about `hasEventListener`
