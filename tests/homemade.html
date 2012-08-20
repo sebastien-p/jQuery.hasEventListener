@@ -31,7 +31,9 @@
 		<form>
 			<label for="jQuery_version">Pick a jQuery version</label>
 			<select id="jQuery_version" name="jQuery" tabIndex="1">
-				<option selected>1.6.2</option>
+                <option selected>1.6.4</option>
+                <option>1.6.3</option>
+				<option>1.6.2</option>
 				<option>1.6.1</option>
 				<option>1.6.0</option>
 				<option>1.5.2</option>
@@ -52,7 +54,7 @@
 		</form>
 		<hr/>
 		<p><span id="test">Element</span> &lt;== Open a JavaScript console and click it !</p>
-		<script id="jQuery" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script id="jQuery" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 		<script>
             (function (WINDOW, LOCATION, SELECTED, DISABLED) {
 
@@ -88,9 +90,9 @@
                     function load_plugin_and_log() {
 
                         $.ajax($.extend(ajax_defaults, {
-                            url:"https://github.com/sebastien-p/jquery.hasEventListener/raw/master/jquery.hasEventListener-2.0.3.min.js",
-                            //url: "../jquery.hasEventListener-2.0.3.js",
-                            //url: "../jquery.hasEventListener-2.0.3.min.js",
+                            url:"https://github.com/sebastien-p/jquery.hasEventListener/raw/master/jquery.hasEventListener-2.0.4.min.js",
+                            //url: "../jquery.hasEventListener-2.0.4.js",
+                            //url: "../jquery.hasEventListener-2.0.4.min.js",
                             //url: "../work%20in%20progress/jquery.hasEventListener-2.1.0.js",
                             success: function () {
 
