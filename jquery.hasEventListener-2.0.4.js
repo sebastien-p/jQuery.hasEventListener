@@ -1,6 +1,6 @@
-/*
+/*!
 
-   Copyright (c) 2010 Sebastien P.
+   Copyright (c) 2012 Sebastien P.
 
    http://twitter.com/_sebastienp
    https://github.com/sebastien-p/jquery.hasEventListener
@@ -26,14 +26,14 @@
 
    ---
 
-   Version 2.0.3 - Mar. 10, 2011.
+   Version 2.0.4 - Aug. 20, 2012.
 
    "hasEventListener" is a (about 2kB minified and 1kB gzipped) jQuery plugin which
    checks if an Object or a DOM element actually has a particular event listener bound to it.
 
    As a bonus, "hasEventListener" also exposes two new jQuery methods called "getEventsData"
-   whose can be used as a 1.2.3+ compatible way to get events data internally stored on an
-   element by jQuery (please, see related examples and API/documentation below).
+   whose can be used as a 1.2.3 to 1.6.4 compatible way to get events data internally stored
+   on an element by jQuery (please, see related examples and API/documentation below).
 
    Examples/Usage :
 
@@ -60,7 +60,7 @@
 
 */
 
-(function (PLUGIN_NAME, BONUS_NAME, EVENTS, LIVE, DATA, STRING, $, TRUE, UNDEFINED) {
+;(function (PLUGIN_NAME, BONUS_NAME, EVENTS, LIVE, DATA, STRING, $, TRUE, UNDEFINED) {
 
     "use strict";
 
@@ -77,7 +77,7 @@
     function get_valid_types_first_letter(object) {
 
         // Some recent browsers will correctly handle that ...
-        var first_try = (/Object|(Ele|Docu)ment|Window/.exec(Object.prototype.toString.call(object)) || [""])[0][0],
+        var first_try = (/Object|(Ele|Docu)ment|Window/.exec(Object.prototype.toString.call(object)) || [""])[0].charAt(),
             node_type;
 
         // ... and some others won't so this workaround is needed
