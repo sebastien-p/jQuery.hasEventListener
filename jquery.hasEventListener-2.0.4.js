@@ -110,8 +110,7 @@
 
     } : function (element) {
 
-        return $[DATA](element, EVENTS);
-
+        return $._data(element, EVENTS) || $[DATA](element, EVENTS);
     };
 
     compatibility[LIVE] = !!jQuery_fn[LIVE]; // 1.3.0+
@@ -413,11 +412,19 @@
     *                                                                                                   *
     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    $.expr[":"][PLUGIN_NAME] = function (dom_element, index, match) {
+    if ($.expr.createPseudo) {
+        $.expr[":"][PLUGIN_NAME] = $.expr.createPseudo(function (selector, context, xml) {
+            return function (elem) {
+                return $[PLUGIN_NAME](elem, selector);
+            }
+        });
+    } else {
+        $.expr[":"][PLUGIN_NAME] = function (dom_element, index, match) {
 
-        return $[PLUGIN_NAME](dom_element, match[3]);
+            return $[PLUGIN_NAME](dom_element, match[3]);
 
-    };
+        };
+    }
 
    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     *                                                                                                   *
