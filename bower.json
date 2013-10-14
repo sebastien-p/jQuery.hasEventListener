@@ -6,7 +6,6 @@
     "fingerproof"
   ],
   "description": "hasEventListener plugin for jQuery 1.2.3+",
-  "main": "todo.js",
   "keywords": [
     "event",
     "jquery",
