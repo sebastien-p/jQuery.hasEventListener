@@ -1,0 +1,25 @@
+{
+  "name": "hasEventListener",
+  "version": "3.0.0",
+  "description": "hasEventListener plugin for jQuery 1.2.3+",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://sebastien-p@github.com/sebastien-p/jquery.hasEventListener.git"
+  },
+  "keywords": [
+    "event",
+    "jquery",
+    "listener",
+    "plugin",
+    "browser"
+  ],
+  "author": "fingerproof",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sebastien-p/jquery.hasEventListener/issues"
+  }
+}
