@@ -1,7 +1,7 @@
 {
   "name": "hasEventListener",
   "version": "3.0.0",
-  "description": "hasEventListener plugin for jQuery 1.2.3+",
+  "description": "hasEventListener plugin for jQuery 1.7+",
   "scripts": {
     "test": "./node_modules/testem/testem.js --file test/testem.json"
   },
