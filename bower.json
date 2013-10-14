@@ -19,7 +19,9 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
-  ]
+    "test"
+  ],
+  "devDependencies": {
+    "jquery": "~2.0.3"
+  }
 }
