@@ -1,5 +1,5 @@
 {
-	"name": "jQuery-hasEventListener",
+	"name": "jQuery.hasEventListener",
 	"version": "3.0.0",
 	"private": true,
 	"scripts": {
@@ -7,6 +7,10 @@
 	},
 	"engines": { "node": ">=0.6.2" },
 	"devDependencies": {
-		"testem": "~0.5.4"
+		"testem": "~0.5.4",
+		"grunt": "~0.4.1",
+		"grunt-contrib-jshint": "~0.6.4",
+		"grunt-contrib-uglify": "~0.2.4",
+		"grunt-contrib-yuidoc": "~0.5.0"
 	}
 }

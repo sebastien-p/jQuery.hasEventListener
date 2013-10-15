@@ -1,5 +1,5 @@
 {
-	"name": "jQuery-hasEventListener",
+	"name": "jQuery.hasEventListener",
 	"version": "3.0.0",
 	"private": true,
 	"author": "fingerproof",
