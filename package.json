@@ -1,28 +1,12 @@
 {
-  "name": "hasEventListener",
-  "version": "3.0.0",
-  "description": "hasEventListener plugin for jQuery 1.7+",
-  "scripts": {
-    "test": "./node_modules/testem/testem.js --file test/testem.json"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sebastien-p/jquery.hasEventListener.git"
-  },
-  "keywords": [
-    "event",
-    "jquery",
-    "listener",
-    "plugin",
-    "browser"
-  ],
-  "author": "fingerproof",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sebastien-p/jquery.hasEventListener/issues"
-  },
-  "devDependencies": {
-    "testem": "~0.5.4"
-  },
-  "private": true
+	"name": "jQuery-hasEventListener",
+	"version": "3.0.0",
+	"private": true,
+	"scripts": {
+		"test": "./node_modules/testem/testem.js --file test/testem.json"
+	},
+	"engines": { "node": ">=0.6.2" },
+	"devDependencies": {
+		"testem": "~0.5.4"
+	}
 }
