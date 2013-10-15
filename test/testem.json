@@ -2,6 +2,11 @@
 	"framework": "mocha+chai",
 
 	"src_files": [
+		"src/*.js",
+		"test/spec/*.spec.js"
+	],
+
+	"serve_files": [
 		"bower_components/jquery/jquery.js",
 		"src/*.js",
 		"test/spec/*.spec.js"
