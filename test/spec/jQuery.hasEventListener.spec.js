@@ -1,5 +1,10 @@
+/*jshint jquery:true */
+/*global chai, describe, it */
+
 describe("todo", function () {
-	it("should be true", function () {
-		chai.expect(true).to.be.true;
+	var expect = chai.expect;
+
+	it("should be a function", function () {
+		expect($.hasEventListener).to.be.a("function");
 	});
 });

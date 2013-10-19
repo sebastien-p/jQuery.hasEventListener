@@ -1,3 +1,6 @@
+/*jshint jquery:true */
+/*global define */
+
 /**
 
 todo.
@@ -11,8 +14,9 @@ todo.
 **/
 
 (function (factory) {
-	typeof define === "function" && define.amd ?
-		define(["jquery"], factory) : factory(jQuery);
+	if (typeof define === "function" && define.amd) {
+		define(["jquery"], factory);
+	} else { factory(jQuery); }
 }(function ($) {
 
 	var each = $.each;
@@ -25,7 +29,7 @@ todo.
 
 	todo.
 
-	@method hasOwnProperty
+	@method hasOwn
 	@category Function
 
 	@param todo.
@@ -39,8 +43,8 @@ todo.
 
 	**/
 
-	var owns = {}.hasOwnProperty;
-	$.hasOwnProperty = owns = $.proxy(owns.call, owns); // et enumerable ?
+	var hasOwn = {}.hasOwnProperty;
+	$.hasOwn = hasOwn = $.proxy(hasOwn.call, hasOwn); // et enumerable ?
 
 	/**
 
@@ -49,7 +53,7 @@ todo.
 	@method getEventsData
 	@category Function
 
-	@uses hasOwnProperty
+	@uses hasOwn
 
 	@param host {Mixed} todo.
 	@param [key] {String} todo.
@@ -67,7 +71,7 @@ todo.
 		var data = getIternalData(host, "events");
 		//if (arguments.length < 2) { return data; }
 		if (!key) { return data; } // cf fnGetEventsData !
-		if (data && owns(data, key)) { return data[key]; }
+		if (data && hasOwn(data, key)) { return data[key]; }
 	}
 
 	$.getEventsData = getEventsData;
@@ -122,7 +126,7 @@ todo.
 
 	**/
 
-	function hasEventListener (host, event, handler) {
+	function hasEventListener (/*host, event, handler*/) {
 		//
 	}
 
