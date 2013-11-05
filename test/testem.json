@@ -1,6 +1,17 @@
 {
 	"framework": "mocha+chai",
-	"launch_in_dev": [
-		"Chrome"
-	]
+	"fail_on_zero_tests": true,
+	"_launch_in_ci": [
+		"PhantomJS",
+		"Chrome",
+		"Safari",
+		"Firefox",
+		"Opera",
+		"IE9",
+		"IE8"
+	],
+	"launch_in_ci": [
+		"PhantomJS"
+	],
+	"launch_in_dev": ["PhantomJS"]
 }
