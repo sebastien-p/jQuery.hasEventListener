@@ -27,6 +27,7 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		// VOIR https://github.com/gruntjs/grunt-contrib-uglify/issues/22#issuecomment-13250492
 		banner: [ // rajouter auteur + license url
 			"/*!",
 			"<%= component.name %>",
