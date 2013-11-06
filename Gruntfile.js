@@ -44,7 +44,7 @@ module.exports = function (grunt) {
 	**/
 
 	config("jshint", {
-		options: { jshintrc: ".jshintrc" },
+		options: { jshintrc: true },
 		conf: "<%= files.conf %>",
 		src: "<%= files.src %>",
 		test: [
