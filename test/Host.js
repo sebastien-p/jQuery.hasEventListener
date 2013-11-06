@@ -20,28 +20,28 @@
 		if ($.isPlainObject(events)) { host._handleEvents(events); }
 	}
 
-	Host.hasOwn = $.proxy($.noop.call, {}.hasOwnProperty);
+	Host.hasOwn = $.proxy($.noop.call, {}.hasOwnProperty); // private?
 
-	Host.isHost = function (value) {
+	Host.isHost = function (value) { // private?
 		return value instanceof Host;
 	};
 
-	Host.inArray = function (array, value) {
+	Host.inArray = function (array, value) { // private?
 		return $.inArray(value, array) > -1;
 	};
 
-	Host.uniquePush = function (array, value) {
+	Host.uniquePush = function (array, value) { // private?
 		if (!Host.inArray(array, value)) { array.push(value); }
 	};
 
-	Host.parseEvent = function (event) {
+	Host.parseEvent = function (event) { // private?
 		event = event.split(/^([^.]+)/);
 		var name = event[1];
 		var namespace = event[2];
 		return { name: name, namespace: namespace };
 	};
 
-	Host.forEachHost = function (object, callback) {
+	Host.forEachHost = function (object, callback) { // rename forAllHosts ?
 		if (Host.isHost(object)) {
 			callback(object);
 			return;
@@ -51,10 +51,19 @@
 		});
 	};
 
+	Host.forAll = function (object, property, callback) { // dans ce cas, private Host.forEachHost et host.forAll ?
+		Host.forEachHost(object, function (host) {
+			host.forAll(property, function (value, data) {
+				callback(host, value, data); // rename data!
+			});
+		});
+	};
+
 	Host.prototype._bindEvent = function (_events, event, handler) {
 		var host = this;
 		Host.uniquePush(host._handlers, handler);
-		Host.uniquePush(_events, handler);
+		//Host.uniquePush(_events, handler);
+		_events.push(handler);
 		host._$.on(event, handler);
 	};
 
@@ -93,9 +102,18 @@
 
 	Host.prototype.forAll = function (property, callback) {
 		var host = this;
-		$.each(host["_" + property], function (index, namespace) {
-			var names = host._getNamesFor(property, namespace);
-			callback(namespace, names);
+		$.each(host["_" + property], function (index, value) {
+			var names = host._getNamesFor(property, value); // rename names!
+			callback(value, names);
+		});
+	};
+
+	Host.prototype.forAllNames = function (callback) { // fusionner avec forAll
+		var host = this;
+		// host._names inutile, utiliser host._events ?
+		$.each(host._names, function (index, name) {
+			var length = host._events[name].handlers.length;
+			callback(name, length);
 		});
 	};
 
