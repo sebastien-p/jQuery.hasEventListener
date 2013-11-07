@@ -41,18 +41,22 @@
 		return { name: name, namespace: namespace };
 	};
 
-	Host.forEachHost = function (object, callback) { // rename forAllHosts ?
+	Host._forEachHost = function inception (object, callback) {
 		if (Host.isHost(object)) {
 			callback(object);
 			return;
 		}
 		$.each(object, function (key, value) {
-			Host.forEachHost(value, callback);
+			inception(value, callback);
 		});
 	};
 
-	Host.forAll = function (object, property, callback) { // dans ce cas, private Host.forEachHost et host.forAll ?
-		Host.forEachHost(object, function (host) {
+	Host.forEach = function (object, property, callback) { // private host.forAll ?
+		if (arguments.length < 3) {
+			Host._forEachHost(object, property);
+			return;
+		}
+		Host._forEachHost(object, function (host) {
 			host.forAll(property, function (value, data) {
 				callback(host, value, data); // rename data!
 			});
@@ -100,7 +104,7 @@
 		});
 	};
 
-	Host.prototype.forAll = function (property, callback) {
+	Host.prototype.forAll = function (property, callback) { // property : names, handlers, namespaces
 		var host = this;
 		$.each(host["_" + property], function (index, value) {
 			var names = host._getNamesFor(property, value); // rename names!

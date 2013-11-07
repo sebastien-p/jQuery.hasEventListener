@@ -2,29 +2,28 @@ describe "jQuery.getEventsData - `host` has some matching events attached", ->
 	expect = chai.expect
 	method = jQuery.getEventsData
 	setupHosts = method.setupHosts
-	forEachHost = method.Host.forEachHost
-	forAll = method.Host.forAll
+	forEach = method.Host.forEach
 
 	beforeEach -> @hosts = setupHosts().someEvents
 
 	describe "get a data object", ->
 
 		# method(host)
-		describe "`host` is the only passed parameter", ->
+		describe "`host` is the only passed parameter", -> # to not equal $._data(host, "events") but to deep equal + should not modify internal data
 			it "should return an object", ->
-				forEachHost @hosts, (host) ->
-					expect(method host).to.be.a "object"
+				forEach @hosts, (host) ->
+					expect(method host).to.be.an "object"
 			it "should only contain data related to the attached events", ->
-				forEachHost @hosts, (host) ->
-					expect(method host).to.have.keys host.names # forAll "names" ? en fait non, plutot host._names mais publique ?
+				forEach @hosts, (host) ->
+					expect(method host).to.have.keys host.names # host._names mais publique ?
 
 		# method(host, handler)
 		describe "the second parameter is a function", ->
 			it "should return an object", ->
-				forAll @hosts, "handlers", (host, handler) ->
-					expect(method host, handler).to.be.a "object"
+				forEach @hosts, "handlers", (host, handler) ->
+					expect(method host, handler).to.be.an "object"
 			it "should only contain data related to the attached events", ->
-				forAll @hosts, "handlers", (host, handler, names) ->
+				forEach @hosts, "handlers", (host, handler, names) ->
 					expect(method host, handler).to.have.keys names
 
 		describe "`event` is a namespace", ->
@@ -33,10 +32,10 @@ describe "jQuery.getEventsData - `host` has some matching events attached", ->
 			# method(host, ".namespace")
 			describe "`event` is the only passed parameter", ->
 				it "should return an object", ->
-					forAll @hosts, "namespaces", (host, namespace) ->
-						expect(method host, namespace).to.be.a "object"
+					forEach @hosts, "namespaces", (host, namespace) ->
+						expect(method host, namespace).to.be.an "object"
 				it "should only contain data related to the attached events", ->
-					forAll @hosts, "namespaces", (host, namespace, names) ->
+					forEach @hosts, "namespaces", (host, namespace, names) ->
 						expect(method host, namespace).to.have.keys names
 
 			# method(host, ".namespace", handler)
@@ -45,7 +44,7 @@ describe "jQuery.getEventsData - `host` has some matching events attached", ->
 					#forEachHost @hosts, (host) ->
 					#	host.forAll "namespaces", (namespace) ->
 					#		host.forAll "handlers", (handler) ->
-					#			expect(method host, namespace, handler).to.be.a "object"
+					#			expect(method host, namespace, handler).to.be.an "object"
 				it "should only contain data related to the attached events", ->
 
 	describe "get a data array", ->
@@ -55,17 +54,17 @@ describe "jQuery.getEventsData - `host` has some matching events attached", ->
 			# method(host, "name")
 			describe "`event` is a name", ->
 				it "should return an array", ->
-					forEachHost @hosts, (host) ->
+					forEach @hosts, (host) ->
 						host.forAllNames (name) ->
-							expect(method host, name).to.be.a "array"
+							expect(method host, name).to.be.an "array" # forEach "names"
 				it "should only contain data related to the attached events", ->
-					forEachHost @hosts, (host) ->
+					forEach @hosts, (host) ->
 						host.forAllNames (name, length) ->
-							expect(method host, name).to.have.length length
+							expect(method host, name).to.have.length length # forEach "names"
 				it "should return the same array accessible via data objects", ->
-					forEachHost @hosts, (host) ->
+					forEach @hosts, (host) ->
 						host.forAllNames (name) ->
-							expect(method host, name).to.equal method(host)[name]
+							expect(method host, name).to.equal method(host)[name] # deep equal, donc to not equal, but to deep equal (objects and arrays!) # forEach "names"
 
 			# method(host, "name.namespace")
 			describe "`event` is a namespaced name", ->
