@@ -1,7 +1,7 @@
 /*jshint jquery:true */
 
 (function ($) {
-	function Host (events) {
+	function Host (events) { // tester avec sinon-chai
 		var host = this;
 		if (!Host.isHost(host)) { return new Host(events); }
 		host._names = host.names = []; // l'un ou l'autre !
@@ -20,7 +20,7 @@
 		if ($.isPlainObject(events)) { host._handleEvents(events); }
 	}
 
-	Host.hasOwn = $.proxy($.noop.call, {}.hasOwnProperty); // private?
+	Host.hasOwn = $.proxy($.call, {}.hasOwnProperty); // private?
 
 	Host.isHost = function (value) { // private?
 		return value instanceof Host;
@@ -51,43 +51,52 @@
 		});
 	};
 
-	Host.forEach = function (object, property, callback) { // private host.forAll ?
+	Host.forEach = function inception (object, properties, callback) {
 		if (arguments.length < 3) {
-			Host._forEachHost(object, property);
+			callback = properties;
+			properties = "";
+		}
+		if (!properties) {
+			Host._forEachHost(object, callback);
 			return;
 		}
-		Host._forEachHost(object, function (host) {
-			host.forAll(property, function (value, data) {
-				callback(host, value, data); // rename data!
+		properties = properties.split(/\+?([^+]+)$/);
+		inception(object, properties[0], function (host) {
+			var outerParameters = $.makeArray(arguments);
+			host._forEach(properties[1], function (value) {
+				var parameters = outerParameters.concat([value]); // [value] or value?
+				callback.apply(null, parameters);
 			});
 		});
 	};
 
-	Host.prototype._bindEvent = function (_events, event, handler) {
-		var host = this;
-		Host.uniquePush(host._handlers, handler);
-		//Host.uniquePush(_events, handler);
+
+	Host.prototype._bindEvent = function (_events, event, handler) { // _events en param c'est bizarre...
+		Host.uniquePush(this._handlers, handler);
 		_events.push(handler);
-		host._$.on(event, handler);
+		this._$.on(event, handler);
+	};
+
+	Host.prototype._getEvent = function (name) {
+		var events = this._events;
+		if (!Host.hasOwn(events, name)) {
+			events[name] = { handlers: [], namespaces: [] };
+		}
+		return events[name];
 	};
 
 	Host.prototype._bindEvents = function (event, handlers) { // too big!
 		var host = this;
 		var parsed = Host.parseEvent(event);
-		var _events = host._events;
-		if (!Host.hasOwn(_events, parsed.name)) {
-			_events[parsed.name] = { handlers: [], namespaces: [] };
-		}
-		_events = _events[parsed.name];
-		Host.uniquePush(host.names, parsed.name);
+		var _event = host._getEvent(parsed.name);
+		Host.uniquePush(host.names, parsed.name); // dans _getEvent ? + sans unique ?
 		if (parsed.namespace) {
 			Host.uniquePush(host._namespaces, parsed.namespace);
-			Host.uniquePush(_events.namespaces, parsed.namespace);
+			Host.uniquePush(_event.namespaces, parsed.namespace);
 		}
-		_events = _events.handlers;
 		if (!$.isArray(handlers)) { handlers = [handlers]; }
 		$.each(handlers, function (index, handler) {
-			host._bindEvent(_events, event, handler);
+			host._bindEvent(_event.handlers, event, handler);
 		});
 	};
 
@@ -98,26 +107,15 @@
 		});
 	};
 
-	Host.prototype._getNamesFor = function (property, value) {
+	/*Host.prototype._getNamesFor = function (property, value) {
 		return $.map(this._events, function (event, name) {
 			if (Host.inArray(event[property], value)) { return name; }
 		});
-	};
+	};*/
 
-	Host.prototype.forAll = function (property, callback) { // property : names, handlers, namespaces
-		var host = this;
-		$.each(host["_" + property], function (index, value) {
-			var names = host._getNamesFor(property, value); // rename names!
-			callback(value, names);
-		});
-	};
-
-	Host.prototype.forAllNames = function (callback) { // fusionner avec forAll
-		var host = this;
-		// host._names inutile, utiliser host._events ?
-		$.each(host._names, function (index, name) {
-			var length = host._events[name].handlers.length;
-			callback(name, length);
+	Host.prototype._forEach = function (property, callback) {
+		$.each(this["_" + property], function (index, value) {
+			callback(value);
 		});
 	};
 

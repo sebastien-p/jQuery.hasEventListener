@@ -1,4 +1,4 @@
-describe "jQuery.getEventsData - `host` has no matching events attached", ->
+describe.only "jQuery.getEventsData - `host` has no matching events attached", ->
 	expect = chai.expect
 	method = jQuery.getEventsData
 	setupHosts = method.setupHosts
@@ -43,9 +43,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 							expect(method host, "name0.namespace0").to.be.undefined
 					# method(host, "nameN.namespace0")
 					it "should return `undefined` if it's an attached name and a non attached namespace", ->
-						forEach @hosts, (host) ->
-							host.forAllNames (name) ->
-								expect(method host, "#{name}.namespace0").to.be.undefined # forEach "names"
+						forEach @hosts, "names", (host, name) ->
+							expect(method host, "#{name}.namespace0").to.be.undefined
 
 				describe "`host` has some namespaced events attached", ->
 					beforeEach -> @hosts = @hosts.someNamespaced
@@ -60,9 +59,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 							expect(method host, "name0.namespace0").to.be.undefined
 					# method(host, "nameN.namespace0")
 					it "should return `undefined` if it's an attached name and a non attached namespace", ->
-						forEach @hosts, (host) ->
-							host.forAllNames (name) ->
-								expect(method host, "#{name}.namespace0").to.be.undefined # forEach "names"
+						forEach @hosts, "names", (host, name) ->
+							expect(method host, "#{name}.namespace0").to.be.undefined
 					# method(host, "name0.namespaceN")
 					it "should return `undefined` if it's a non attached name and an attached namespace", ->
 						forEach @hosts, "namespaces", (host, namespace) ->
@@ -113,9 +111,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 							expect(method host, "name0", notValid).to.be.undefined
 					# method(host, "nameN", notValid)
 					it "should return `undefined` if `event` is an attached name", ->
-						forEach @hosts, (host) ->
-							host.forAllNames (name) ->
-								expect(method host, name, notValid).to.be.undefined # forEach "names"
+						forEach @hosts, "names", (host, name) ->
+							expect(method host, name, notValid).to.be.undefined
 
 					describe "`host` has no namespaced events attached", ->
 						beforeEach -> @hosts = @hosts.noNamespaced
@@ -130,9 +127,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 								expect(method host, "name0.namespace0", notValid).to.be.undefined
 						# method(host, "nameN.namespace0", notValid)
 						it "should return `undefined` if `event` is an attached name and a non attached namespace", ->
-							forEach @hosts, (host) ->
-								host.forAllNames (name) ->
-									expect(method host, "#{name}.namespace0", notValid).to.be.undefined # forEach "names"
+							forEach @hosts, "names", (host, name) ->
+								expect(method host, "#{name}.namespace0", notValid).to.be.undefined
 
 					describe "`host` has some namespaced events attached", ->
 						beforeEach -> @hosts = @hosts.someNamespaced
@@ -147,9 +143,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 								expect(method host, "name0.namespace0", notValid).to.be.undefined
 						# method(host, "nameN.namespace0", notValid)
 						it "should return `undefined` if `event` is an attached name and a non attached namespace", ->
-							forEach @hosts, (host) ->
-								host.forAllNames (name) ->
-									expect(method host, "#{name}.namespace0", notValid).to.be.undefined # forEach "names"
+							forEach @hosts, "names", (host, name) ->
+								expect(method host, "#{name}.namespace0", notValid).to.be.undefined
 						# method(host, "name0.namespaceN", notValid)
 						it "should return `undefined` if `event` is a non attached name and an attached namespace", ->
 							forEach @hosts, "namespaces", (host, namespace) ->
@@ -164,9 +159,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 								expect(method host, "name0", handler0).to.be.undefined
 						# method(host, "nameN", handler0)
 						it "should return `undefined` if `event` is an attached name", ->
-							forEach @hosts, (host) ->
-								host.forAllNames (name) ->
-									expect(method host, name, handler0).to.be.undefined # forEach "names"
+							forEach @hosts, "names", (host, name) ->
+								expect(method host, name, handler0).to.be.undefined
 
 						describe "`host` has no namespaced events attached", ->
 							beforeEach -> @hosts = @hosts.noNamespaced
@@ -181,9 +175,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 									expect(method host, "name0.namespace0", handler0).to.be.undefined
 							# method(host, "nameN.namespace0", handler0)
 							it "should return `undefined` if `event` is an attached name and a non attached namespace", ->
-								forEach @hosts, (host) ->
-									host.forAllNames (name) ->
-										expect(method host, "#{name}.namespace0", handler0).to.be.undefined # forEach "names"
+								forEach @hosts, "names", (host, name) ->
+									expect(method host, "#{name}.namespace0", handler0).to.be.undefined
 
 						describe "`host` has some namespaced events attached", ->
 							beforeEach -> @hosts = @hosts.someNamespaced
@@ -198,9 +191,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 									expect(method host, "name0.namespace0", handler0).to.be.undefined
 							# method(host, "nameN.namespace0", handler0)
 							it "should return `undefined` if `event` is an attached name and a non attached namespace", ->
-								forEach @hosts, (host) ->
-									host.forAllNames (name) ->
-										expect(method host, "#{name}.namespace0", handler0).to.be.undefined # forEach "names"
+								forEach @hosts, "names", (host, name) ->
+									expect(method host, "#{name}.namespace0", handler0).to.be.undefined
 							# method(host, "name0.namespaceN", handler0)
 							it "should return `undefined` if `event` is a non attached name and an attached namespace", ->
 								forEach @hosts, "namespaces", (host, namespace) ->
@@ -225,10 +217,8 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 									expect(method host, "name0.namespace0", handler).to.be.undefined
 							# method(host, "nameN.namespace0", handlerN)
 							it "should return `undefined` if `event` is an attached name and a non attached namespace", ->
-								forEach @hosts, (host) ->
-									host.forAllNames (name) ->
-										host.forAll "handlers", (handler) ->
-											expect(method host, "#{name}.namespace0", handler).to.be.undefined # forEach "names+handlers"
+								forEach @hosts, "names+handlers", (host, name, handler) ->
+									expect(method host, "#{name}.namespace0", handler).to.be.undefined
 
 						describe "`host` has some namespaced events attached", ->
 							beforeEach -> @hosts = @hosts.someNamespaced
@@ -243,12 +233,9 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 									expect(method host, "name0.namespace0", handler).to.be.undefined
 							# method(host, "nameN.namespace0", handlerN)
 							it "should return `undefined` if `event` is an attached name and a non attached namespace", ->
-								forEach @hosts, (host) ->
-									host.forAllNames (name) ->
-										host.forAll "handlers", (handler) ->
-											expect(method host, "#{name}.namespace0", handler).to.be.undefined # forEach "names+handlers"
+								forEach @hosts, "names+handlers", (host, name, handler) ->
+									expect(method host, "#{name}.namespace0", handler).to.be.undefined
 							# method(host, "name0.namespaceN", handlerN)
 							it "should return `undefined` if `event` is a non attached name and an attached namespace", ->
-								forEach @hosts, "namespaces", (host, namespace) ->
-									host.forAll "handlers", (handler) ->
-										expect(method host, "name0#{namespace}", handler).to.be.undefined # forEach "namespaces+handlers"
+								forEach @hosts, "namespaces+handlers", (host, namespace, handler) ->
+									expect(method host, "name0#{namespace}", handler).to.be.undefined
