@@ -1,123 +1,140 @@
 /*jshint jquery:true */
 
-(function ($) {
+(function ($, exports) {
 	function Host (events) { // tester avec sinon-chai
-		var host = this;
-		if (!Host.isHost(host)) { return new Host(events); }
-		host._names = host.names = []; // l'un ou l'autre !
-		host._$ = $(host);
-		host._events = {};
-		/*{
-			name1: {
-				handlers: [],
-				namespaces: {
-					".namespace1": []
-				}
-			}
-		}*/
-		host._handlers = [];
-		host._namespaces = [];
-		if ($.isPlainObject(events)) { host._handleEvents(events); }
+		if (!isHost(this)) { return new Host(events); }
+		this._$ = $(this);
+		this._names = new exports.Map();
+		this._handlers = new exports.Map();
+		this._namespaces = new exports.Map();
+		handleEvents(this, events);
 	}
 
-	Host.hasOwn = $.proxy($.call, {}.hasOwnProperty); // private?
+	function isHost (object) { return object instanceof Host; }
 
-	Host.isHost = function (value) { // private?
-		return value instanceof Host;
-	};
-
-	Host.inArray = function (array, value) { // private?
-		return $.inArray(value, array) > -1;
-	};
-
-	Host.uniquePush = function (array, value) { // private?
-		if (!Host.inArray(array, value)) { array.push(value); }
-	};
-
-	Host.parseEvent = function (event) { // private?
+	function parseEvent (event) {
 		event = event.split(/^([^.]+)/);
 		var name = event[1];
 		var namespace = event[2];
-		return { name: name, namespace: namespace };
-	};
+		event = { name: name };
+		if (namespace) { event.namespace = namespace; }
+		return event;
+	}
 
-	Host._forEachHost = function inception (object, callback) {
-		if (Host.isHost(object)) {
-			callback(object);
-			return;
-		}
-		$.each(object, function (key, value) {
-			inception(value, callback);
+	function foo (host, parsedEvent) {
+		//host._names.set(parserEvent.name, {});
+		//host._names.set(parserEvent.namespace, {});
+		$.each(parsedEvent, function (key, value) {
+			host["_" +  key + "s"].set(value, {});
 		});
+	}
+
+	function bar (host, handler) {
+		host._handlers.set(handler, {});
+	}
+
+	function bindEvent (host, event, handler) {
+		bar(host, handler);
+		host._$.on(event, handler);
+	}
+
+	function bindEvents (host, event, handlers) {
+		foo(host, parseEvent(event));
+		if (!$.isArray(handlers)) { handlers = [handlers]; }
+		$.each(handlers, function (index, handler) {
+			bindEvent(host, event, handler);
+		});
+	}
+
+	function handleEvents (host, events) {
+		if (!events) { return; }
+		$.each(events, $.proxy(bindEvents, null, host));
+	}
+
+	function forEachHost (object, callback) {
+		if (isHost(object)) { callback(object); return; }
+		$.each(object, function (key, value) {
+			forEachHost(value, callback);
+		});
+	}
+
+	function forEach (host, properties, callback) {
+		if (!properties) { callback(host); return; }
+		properties = properties.split(/\+?([^+]+)$/);
+		//var keys = host["_" + properties[1]].keys();
+		//var keys = get(host, properties[1]);
+		var keys = host.get(properties[1]);
+		forEach(host, properties[0], function () {
+			var outerParameters = $.makeArray(arguments);
+			$.each(keys, function (index, value) {
+				var parameters = outerParameters.concat(value);
+				callback.apply(null, parameters);
+			});
+		});
+	}
+
+/*
+
+	names: {
+		name: {
+			namespaces: {
+				.namespace: {
+					handlers: {}
+				}
+			},
+			handlers: {
+				handler: {
+					namespaces: {}
+				}
+			}
+		}
+	}
+
+	namespaces: {
+		.namespace: {
+			names: {
+				name: {
+					handlers: {}
+				}
+			},
+			handlers: {
+				handler: {
+					names: {}
+				}
+			}
+		}
+	}
+
+	handlers: {
+		.handler: {
+			names: {
+				name: {
+					namespaces: {}
+				}
+			},
+			namespaces: {
+				.namespace: {
+					names: {}
+				}
+			}
+		}
+	}
+
+*/
+
+	Host.prototype.get = function (property) {
+		return this["_" + property].keys();
 	};
 
-	Host.forEach = function inception (object, properties, callback) {
+	Host.forEach = function (object, properties, callback) {
 		if (arguments.length < 3) {
 			callback = properties;
 			properties = "";
 		}
-		if (!properties) {
-			Host._forEachHost(object, callback);
-			return;
-		}
-		properties = properties.split(/\+?([^+]+)$/);
-		inception(object, properties[0], function (host) {
-			var outerParameters = $.makeArray(arguments);
-			host._forEach(properties[1], function (value) {
-				var parameters = outerParameters.concat([value]); // [value] or value?
-				callback.apply(null, parameters);
-			});
+		forEachHost(object, function (host) {
+			forEach(host, properties, callback);
 		});
 	};
 
-
-	Host.prototype._bindEvent = function (_events, event, handler) { // _events en param c'est bizarre...
-		Host.uniquePush(this._handlers, handler);
-		_events.push(handler);
-		this._$.on(event, handler);
-	};
-
-	Host.prototype._getEvent = function (name) {
-		var events = this._events;
-		if (!Host.hasOwn(events, name)) {
-			events[name] = { handlers: [], namespaces: [] };
-		}
-		return events[name];
-	};
-
-	Host.prototype._bindEvents = function (event, handlers) { // too big!
-		var host = this;
-		var parsed = Host.parseEvent(event);
-		var _event = host._getEvent(parsed.name);
-		Host.uniquePush(host.names, parsed.name); // dans _getEvent ? + sans unique ?
-		if (parsed.namespace) {
-			Host.uniquePush(host._namespaces, parsed.namespace);
-			Host.uniquePush(_event.namespaces, parsed.namespace);
-		}
-		if (!$.isArray(handlers)) { handlers = [handlers]; }
-		$.each(handlers, function (index, handler) {
-			host._bindEvent(_event.handlers, event, handler);
-		});
-	};
-
-	Host.prototype._handleEvents = function (events) {
-		var host = this;
-		$.each(events, function (event, handlers) {
-			host._bindEvents(event, handlers);
-		});
-	};
-
-	/*Host.prototype._getNamesFor = function (property, value) {
-		return $.map(this._events, function (event, name) {
-			if (Host.inArray(event[property], value)) { return name; }
-		});
-	};*/
-
-	Host.prototype._forEach = function (property, callback) {
-		$.each(this["_" + property], function (index, value) {
-			callback(value);
-		});
-	};
-
-	$.getEventsData.Host = Host;
-}(jQuery));
+	exports.Host = Host;
+}(jQuery, jQuery.getEventsData));
