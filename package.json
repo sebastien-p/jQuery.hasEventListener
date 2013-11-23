@@ -14,7 +14,7 @@
 		"grunt-contrib-testem": "~0.5.11",
 		"grunt-contrib-uglify": "~0.2.5",
 		"grunt-contrib-yuidoc": "~0.5.0",
-		"grunt-coffeelint": "0.0.7",
+		"grunt-coffeelint": "~0.0.7",
 		"phantomjs": "1.9.1-0"
 	}
 }
