@@ -1,10 +1,9 @@
 /*jshint jquery:true */
 
 /**
-Provides an interface to ease unit testing of
-{{#crossLinkModule "hasEventListener"}}`jQuery.hasEventListener`{{/crossLinkModule}}.
+Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 @module hasEventListener
-@submodule hasEventListener.Map
+@submodule hasEventListener.map
 @requires hasEventListener
 **/
 
