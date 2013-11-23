@@ -10,12 +10,13 @@ describe "Map", ->
 	describe "`set` method", ->
 		it "should have a `set` method", ->
 			expect(@map).to.respondTo "set"
-		it "should always return `undefined`", ->
+		it "should return `undefined` if no key/value are passed", ->
 			expect(@map.set()).to.be.undefined
 			expect(@map.set "key1").to.be.undefined
-			expect(@map.set "key1", "value1").to.be.undefined
-			expect(@map.set "key2", "value1").to.be.undefined
-			expect(@map.set "key2", "value2").to.be.undefined
+		it "should return the passed value", ->
+			expect(@map.set "key1", "value1").to.equal "value1"
+			expect(@map.set "key2", "value1").to.equal "value1"
+			expect(@map.set "key2", @map).to.equal @map
 
 	describe "`get` method", ->
 		it "should have a `get` method", ->

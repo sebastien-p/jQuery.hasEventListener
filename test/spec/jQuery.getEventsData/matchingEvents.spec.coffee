@@ -1,141 +1,140 @@
-describe.only "jQuery.getEventsData - `host` has some matching events attached", ->
+describe "jQuery.getEventsData - `host` has some matching events attached", ->
 	expect = chai.expect
-	method = jQuery.getEventsData
-	setupHosts = method.setupHosts
-	forEach = method.Host.forNested # rename!
+	getEventsData = jQuery.getEventsData
+	setupHosts = getEventsData.setupHosts
+	forNested = getEventsData.Host.forNested
 	extend = jQuery.extend
 
 	beforeEach -> @hosts = setupHosts().someEvents
 
 	describe "get a data object", ->
 
-		# method(host)
+		# getEventsData(host)
 		describe "`host` is the only passed parameter", ->
 			it "should return an object", ->
-				forEach @hosts, "names", (host) ->
-					expect(method host).to.be.an "object"
+				forNested @hosts, "names", (host) ->
+					expect(getEventsData host).to.be.an "object"
 			it "should return a cloned object", ->
-				forEach @hosts, "names", (host) ->
-					eventsData = extend method(host), IShouldNotBeInHere: true
-					expect(method host).not.to.deep.equal eventsData
+				forNested @hosts, "names", (host) ->
+					eventsData = extend getEventsData(host), { IShouldNotBeInHere: true }
+					expect(getEventsData host).not.to.deep.equal eventsData
 			it "should only contain data related to the attached events", ->
-				forEach @hosts, "names", (host, names) ->
-					expect(method host).to.have.keys names
+				forNested @hosts, "names", (host, names) ->
+					expect(getEventsData host).to.have.keys names
 
-		# method(host, handler)
+		# getEventsData(host, handler)
 		describe "the second parameter is a function", ->
 			it "should return an object", ->
-				forEach @hosts, "handlers.names", (host, handler) ->
-					expect(method host, handler).to.be.an "object"
+				forNested @hosts, "handlers.names", (host, handler) ->
+					expect(getEventsData host, handler).to.be.an "object"
 			it "should return a cloned object", ->
-				forEach @hosts, "handlers.name", (host, handler) ->
-					eventsData = extend method(host, handler), IShouldNotBeInHere: true
-					expect(method host, handler).not.to.deep.equal eventsData
+				forNested @hosts, "handlers.names", (host, handler) ->
+					eventsData = extend getEventsData(host, handler), { IShouldNotBeInHere: true }
+					expect(getEventsData host, handler).not.to.deep.equal eventsData
 			it "should only contain data related to the attached events", ->
-				forEach @hosts, "handlers.names", (host, handler, names) ->
-					expect(method host, handler).to.have.keys names
+				forNested @hosts, "handlers.names", (host, handler, names) ->
+					expect(getEventsData host, handler).to.have.keys names
 
 		describe "`event` is a namespace", ->
 			beforeEach -> @hosts = @hosts.someNamespaced
 
-			# method(host, ".namespace")
+			# getEventsData(host, ".namespace")
 			describe "`event` is the only passed parameter", ->
 				it "should return an object", ->
-					forEach @hosts, "namespaces.names", (host, namespace) ->
-						expect(method host, namespace).to.be.an "object"
+					forNested @hosts, "namespaces.names", (host, namespace) ->
+						expect(getEventsData host, namespace).to.be.an "object"
 				it "should return a cloned object", ->
-					forEach @hosts, "namespaces.names", (host, namespace) ->
-						eventsData = extend method(host, namespace), IShouldNotBeInHere: true
-						expect(method host, namespace).not.to.deep.equal eventsData
+					forNested @hosts, "namespaces.names", (host, namespace) ->
+						eventsData = extend getEventsData(host, namespace), { IShouldNotBeInHere: true }
+						expect(getEventsData host, namespace).not.to.deep.equal eventsData
 				it "should only contain data related to the attached events", ->
-					forEach @hosts, "namespaces.names", (host, namespace, names) ->
-						expect(method host, namespace).to.have.keys names
+					forNested @hosts, "namespaces.names", (host, namespace, names) ->
+						expect(getEventsData host, namespace).to.have.keys names
 
-			# method(host, ".namespace", handler)
+			# getEventsData(host, ".namespace", handler)
 			describe "`event` and `handler` are both passed", ->
 				it "should return an object", ->
-					forEach @hosts, "namespaces.handlers.names", (host, namespace, handler) ->
-						expect(method host, namespace, handler).to.be.an "object"
+					forNested @hosts, "namespaces.handlers.names", (host, namespace, handler) ->
+						expect(getEventsData host, namespace, handler).to.be.an "object"
 				it "should return a cloned object", ->
-					forEach @hosts, "namespaces.handlers.names", (host, namespace, handler) ->
-						eventsData = extend method(host, namespace, handler), IShouldNotBeInHere: true
-						expect(method host, namespace, handler).not.to.deep.equal eventsData
+					forNested @hosts, "namespaces.handlers.names", (host, namespace, handler) ->
+						eventsData = extend getEventsData(host, namespace, handler), { IShouldNotBeInHere: true }
+						expect(getEventsData host, namespace, handler).not.to.deep.equal eventsData
 				it "should only contain data related to the attached events", ->
-					forEach @hosts, "namespaces.handlers.names", (host, namespace, handler, names) ->
-						expect(method host, namespace, handler).to.have.keys names
+					forNested @hosts, "namespaces.handlers.names", (host, namespace, handler, names) ->
+						expect(getEventsData host, namespace, handler).to.have.keys names
 
 	describe "get a data array", ->
 
 		describe "`event` is the only passed parameter", ->
 
-			# method(host, "name")
+			# getEventsData(host, "name")
 			describe "`event` is a name", ->
 				it "should return an array", ->
-					forEach @hosts, "names.handlers", (name) ->
-						expect(method host, name).to.be.an "array"
+					forNested @hosts, "names.handlers", (host, name) ->
+						expect(getEventsData host, name).to.be.an "array"
 				it "should return a cloned array", ->
-					forEach @hosts, "names.handlers", (name) ->
-						method(host, name).push "IShouldNotBeInHere"
-						expect(method host, name).not.to.contain "IShouldNotBeInHere"
+					forNested @hosts, "names.handlers", (host, name) ->
+						getEventsData(host, name).push "IShouldNotBeInHere"
+						expect(getEventsData host, name).not.to.contain "IShouldNotBeInHere"
 				it "should return the same array accessible via data objects", ->
-					forEach @hosts, "names.handlers", (name) ->
-						expect(method host, name).to.deep.equal method(host, name)[name]
+					forNested @hosts, "names.handlers", (host, name) ->
+						expect(getEventsData host, name).to.deep.equal getEventsData(host)[name]
 				it "should only contain data related to the attached events", ->
-					forEach @hosts, "names.handlers", (name, handlers) ->
-						expect(method host, name).to.have.length handlers.length
+					forNested @hosts, "names.data", (host, name, data) ->
+						expect(getEventsData host, name).to.have.length data.length
 
-			# method(host, "name.namespace")
+			# getEventsData(host, "name.namespace")
 			describe "`event` is a namespaced name", ->
 				beforeEach -> @hosts = @hosts.someNamespaced
 
 				it "should return an array", ->
-					forEach @hosts, "names.namespaces.handlers", (name, namespace) ->
-						expect(method host, name+namespace).to.be.an "array"
+					forNested @hosts, "names.namespaces.data", (host, name, namespace) ->
+						expect(getEventsData host, name + namespace).to.be.an "array"
 				it "should return a cloned array", ->
-					forEach @hosts, "names.namespaces.handlers", (name, namespace) ->
-						method(host, name+namespace).push "IShouldNotBeInHere"
-						expect(method host, name+namespace).not.to.contain "IShouldNotBeInHere"
+					forNested @hosts, "names.namespaces.data", (host, name, namespace) ->
+						getEventsData(host, name + namespace).push "IShouldNotBeInHere"
+						expect(getEventsData host, name + namespace).not.to.contain "IShouldNotBeInHere"
 				it "should return the same array accessible via data objects", ->
-					forEach @hosts, "names.namespaces.handlers", (name, namespace) ->
-						expect(method host, name+namespace).to.deep.equal method(host, name+namespace)[name]
+					forNested @hosts, "names.namespaces.data", (host, name, namespace) ->
+						expect(getEventsData host, name + namespace).to.deep.equal getEventsData(host, namespace)[name]
 				it "should only contain data related to the attached events", ->
-					forEach @hosts, "names.namespaces.handlers", (name, namespace, handlers) ->
-						expect(method host, name+namespace).to.have.length handlers.length
+					forNested @hosts, "names.namespaces.data", (host, name, namespace, data) ->
+						expect(getEventsData host, name + namespace).to.have.length data.length
 
 		describe "`event` and `handler` are both passed", ->
 
-			# method(host, "name", handler)
+			# getEventsData(host, "name", handler)
 			describe "`event` is a name", ->
 				it "should return an array", ->
-					forEach @hosts, "names.handlers.namespaces", (name, handler) ->
-						expect(method host, name, handler).to.be.an "array"
+					forNested @hosts, "names.handlers.data", (host, name, handler) ->
+						expect(getEventsData host, name, handler).to.be.an "array"
 				it "should return a cloned array", ->
-					forEach @hosts, "names.handlers.namespaces", (name, handler) ->
-						method(host, name, handler).push "IShouldNotBeInHere"
-						expect(method host, name, handler).not.to.contain "IShouldNotBeInHere"
+					forNested @hosts, "names.handlers.data", (host, name, handler) ->
+						getEventsData(host, name, handler).push "IShouldNotBeInHere"
+						expect(getEventsData host, name, handler).not.to.contain "IShouldNotBeInHere"
 				it "should return the same array accessible via data objects", ->
-					forEach @hosts, "names.handlers.namespaces", (name, handler) ->
-						expect(method host, name, handler).to.deep.equal method(host, name, handler)[name]
+					forNested @hosts, "names.handlers.data", (host, name, handler) ->
+						expect(getEventsData host, name, handler).to.deep.equal getEventsData(host, handler)[name]
 				it "should only contain data related to the attached events", ->
-					forEach @hosts, "names.handlers.namespaces", (name, handler, namespaces) ->
-						expect(method host, name, handler).to.have.length namespace.length # !!!!! ATTENTION A VERIFIER !!!!!
+					forNested @hosts, "names.handlers.data", (host, name, handler, data) ->
+						expect(getEventsData host, name, handler).to.have.length data.length
 
-			# method(host, "name.namespace", handler)
+			# getEventsData(host, "name.namespace", handler)
 			describe "`event` is a namespaced name", ->
 				beforeEach -> @hosts = @hosts.someNamespaced
 
 				it "should return an array", ->
-					forEach @hosts, "names.namespaces.handlers.todo", (name, namespace, handler) ->
-						expect(method host, name+namespace, handler).to.be.an "array"
+					forNested @hosts, "names.namespaces.handlers.data", (host, name, namespace, handler) ->
+						expect(getEventsData host, name + namespace, handler).to.be.an "array"
 				it "should return a cloned array", ->
-					forEach @hosts, "names.namespaces.handlers.todo", (name, namespace, handler) ->
-						method(host, name+namespace, handler).push "IShouldNotBeInHere"
-						expect(method host, name+namespace, handler).not.to.contain "IShouldNotBeInHere"
+					forNested @hosts, "names.namespaces.handlers.data", (host, name, namespace, handler) ->
+						getEventsData(host, name + namespace, handler).push "IShouldNotBeInHere"
+						expect(getEventsData host, name + namespace, handler).not.to.contain "IShouldNotBeInHere"
 				it "should return the same array accessible via data objects", ->
-					forEach @hosts, "names.namespaces.handlers.todo", (name, namespace, handler) ->
-						expect(method host, name+namespace, handler).to.deep.equal method(host, name+namespace, handler)[name]
+					forNested @hosts, "names.namespaces.handlers.data", (host, name, namespace, handler) ->
+						expect(getEventsData host, name + namespace, handler).to.deep.equal getEventsData(host, namespace, handler)[name]
 				it "should only contain data related to the attached events", ->
-					forEach @hosts, "names.namespaces.handlers.todo", (name, namespace, handlers, toto) ->
-						expect(method host, name+namespace, handler).to.have.length todo.length # !!!!! ATTENTION A VERIFIER !!!!!
-
+					forNested @hosts, "names.namespaces.handlers.data", (host, name, namespace, handler, data) ->
+						expect(getEventsData host, name + namespace, handler).to.have.length data.length
 

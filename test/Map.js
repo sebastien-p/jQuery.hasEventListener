@@ -1,17 +1,20 @@
 /*jshint jquery:true */
 
-(function ($, exports) {
-	function Map () {
-		if (!(this instanceof Map)) { return new Map(); }
-		this._keys = [];
-		this._values = [];
-	}
+/**
+Provides an interface to ease unit testing of
+{{#crossLinkModule "hasEventListener"}}`jQuery.hasEventListener`{{/crossLinkModule}}.
+@module hasEventListener
+@submodule hasEventListener.Map
+@requires hasEventListener
+**/
 
+(function ($, exports) {
 	function indexOf (array, value) {
 		return $.inArray(value, array);
 	}
 
 	function push (array, value) {
+		// Return the index of `value` in `array`
 		return array.push(value) - 1;
 	}
 
@@ -21,20 +24,70 @@
 		return index;
 	}
 
+	/**
+	A key/value hash accepting non-string values as keys.
+	@class jQuery.getEventsData.Map
+	@constructor
+	@example
+		new Map();
+	**/
+
+	function Map () {
+		if (!(this instanceof Map)) { return new Map(); }
+		this._keys = [];
+		this._values = [];
+	}
+
+	exports.Map = Map;
+
+	/**
+	Set a value for a given key, creating or modifyng it.
+	@private
+	@method set
+	@for jQuery.getEventsData.Map
+	@param key {Mixed} The key used to refer to the passed `value`.
+	@param value {Mixed} Any value.
+	@return {Mixed} The passed `value`.
+	@example
+		map.set("bestYearEver", 1986);
+	@example
+		map.set(function(){}, true);
+	**/
+
 	Map.prototype.set = function (key, value) {
 		if (arguments.length < 2) { return; }
 		var index = uniquePush(this._keys, key);
 		this._values[index] = value;
+		return value;
 	};
+
+	/**
+	Get the value associated to a given key.
+	@private
+	@method get
+	@for jQuery.getEventsData.Map
+	@param key {Mixed} The key used to refer to the value.
+	@return {Mixed} The value associated to the passed `key` or `undefined`.
+	@example
+		map.get("bestYearEver");
+	**/
 
 	Map.prototype.get = function (key) {
 		var index = indexOf(this._keys, key);
 		return this._values[index];
 	};
 
+	/**
+	Get all the keys in the map.
+	@private
+	@method keys
+	@for jQuery.getEventsData.Map
+	@return {Array} An array containing all the keys in the map.
+	@example
+		map.keys();
+	**/
+
 	Map.prototype.keys = function () {
 		return this._keys.slice();
 	};
-
-	exports.Map = Map;
 }(jQuery, jQuery.getEventsData));

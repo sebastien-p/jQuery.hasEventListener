@@ -1,9 +1,9 @@
 describe "jQuery.getEventsData", ->
 	expect = chai.expect
-	method = jQuery.getEventsData
+	getEventsData = jQuery.getEventsData
 
 	it "should be a function", ->
-		expect(method).to.be.a "function"
-	# method()
+		expect(getEventsData).to.be.a "function"
+	# getEventsData()
 	it "should throw an error if `host` isn't valid", ->
-		expect(method).to.throw()
+		expect(getEventsData).to.throw()
