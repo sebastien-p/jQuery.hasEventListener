@@ -7,6 +7,9 @@ describe "Map", ->
 	it "should be a function", ->
 		expect(Map).to.be.a "function"
 
+	it "shouldn't leak to the global namespace", ->
+		expect(Map()).to.be.an.instanceof Map
+
 	describe "`set` method", ->
 		it "should have a `set` method", ->
 			expect(@map).to.respondTo "set"

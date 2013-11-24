@@ -25,10 +25,11 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 
 	/**
 	A key/value hash accepting non-string values as keys.
-	@class jQuery.getEventsData.Map
+	@namespace jQuery.getEventsData
+	@class Map
 	@constructor
 	@example
-		new Map();
+		var map = new jQuery.getEventsData.Map();
 	**/
 
 	function Map () {
@@ -43,7 +44,6 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 	Set a value for a given key, creating or modifyng it.
 	@private
 	@method set
-	@for jQuery.getEventsData.Map
 	@param key {Mixed} The key used to refer to the passed `value`.
 	@param value {Mixed} Any value.
 	@return {Mixed} The passed `value`.
@@ -64,7 +64,6 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 	Get the value associated to a given key.
 	@private
 	@method get
-	@for jQuery.getEventsData.Map
 	@param key {Mixed} The key used to refer to the value.
 	@return {Mixed} The value associated to the passed `key` or `undefined`.
 	@example
@@ -80,7 +79,6 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 	Get all the keys in the map.
 	@private
 	@method keys
-	@for jQuery.getEventsData.Map
 	@return {Array} An array containing all the keys in the map.
 	@example
 		map.keys();

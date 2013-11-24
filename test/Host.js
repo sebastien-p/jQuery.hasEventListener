@@ -143,13 +143,14 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 
 	/**
 	A host: its purpose is to receive event listeners.
-	@class jQuery.getEventsData.Host
+	@namespace jQuery.getEventsData
+	@class Host
 	@constructor
 	@param [events] {Object} A hash of events and listeners.
 	@example
-		new Host();
+		var host = new jQuery.getEventsData.Host();
 	@example
-		new Host({
+		var host = new jQuery.getEventsData.Host({
 			"name.namespace": [handler1, handler2],
 			"name1.namespace": handler1,
 			name2: handler2
@@ -164,21 +165,20 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 	exports.Host = Host;
 
 	/**
-	Recursively search for `Host` instances in objects and arrays.
+	Recursively search for `Host` instances in objects.
 	Also, loops over each passed property for each found host.
 	@private
 	@static
 	@method forEach
-	@for jQuery.getEventsData.Host
-	@param object {Object|Array} It should contain some `Host` instances.
+	@param object {Object} It should contain some `Host` instances.
 	@param [properties] {String} `/^name(space)?s|handlers$/`, separated by a plus sign.
 	@param callback {Function} The function to be called for each host and property.
 	@example
-		Host.forEach(hosts, function (host) {});
+		jQuery.getEventsData.Host.forEach(hosts, function (host) {});
 	@example
-		Host.forEach(hosts, "names", function (host, name) {});
+		jQuery.getEventsData.Host.forEach(hosts, "names", function (host, name) {});
 	@example
-		Host.forEach(hosts, "names+handlers", function (host, name, handler) {});
+		jQuery.getEventsData.Host.forEach(hosts, "names+handlers", function (host, name, handler) {});
 	**/
 
 	Host.forEach = function (object, properties, callback) {
@@ -189,21 +189,20 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 	};
 
 	/**
-	Recursively search for `Host` instances in objects and arrays.
+	Recursively search for `Host` instances in objects.
 	Also, loops over each value for any passed property for each found host.
 	@private
 	@static
 	@method forNested
-	@for jQuery.getEventsData.Host
-	@param object {Object|Array} It should contain some `Host` instances.
+	@param object {Object} It should contain some `Host` instances.
 	@param properties {String} `/^name(space)?s|handlers|data$/`, separated by a dot.
 	@param callback {Function} The function to be called for each host and property.
 	@example
-		Host.forNested(hosts, "namespaces", function (host, namespaces) {});
+		jQuery.getEventsData.Host.forNested(hosts, "namespaces", function (host, namespaces) {});
 	@example
-		Host.forNested(hosts, "handlers.names", function (host, handler, names) {});
+		jQuery.getEventsData.Host.forNested(hosts, "handlers.names", function (host, handler, names) {});
 	@example
-		Host.forNested(hosts, "names.data", function (host, name, data) {});
+		jQuery.getEventsData.Host.forNested(hosts, "names.data", function (host, name, data) {});
 	**/
 
 	Host.forNested = function (object, properties, callback) {

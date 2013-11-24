@@ -1,6 +1,23 @@
 /*jshint jquery:true */
 
+/**
+Provides an interface to ease unit testing of `jQuery.hasEventListener`.
+@module hasEventListener
+@submodule hasEventListener.setupHosts
+@requires hasEventListener.host
+**/
+
 (function (exports, Host) {
+	/**
+	Setup a bunch of `Host` instances to be used in unit tests.
+	@private
+	@method getEventsData.setupHosts
+	@for jQuery
+	@return {Object} An object containing useful `Hosts` instances.
+	@example
+		var hosts = jQuery.getEventsData.setupHosts();
+	**/
+
 	exports.setupHosts = function () {
 		function handler1 () {}
 		function handler2 () {}
