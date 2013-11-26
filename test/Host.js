@@ -133,7 +133,8 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 		var map = object["_" + properties[1]];
 		var keys = map.keys();
 		properties = properties[2];
-		if (!properties) { callback(keys); return; }
+		// Do not call the callback if the map is empty
+		if (keys.length && !properties) { callback(keys); return; }
 		$.each(keys, function (index, value) {
 			// Recursively add arguments to be passed
 			var newCallback = $.proxy(callback, null, value);
@@ -202,7 +203,7 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 	@example
 		jQuery.getEventsData.Host.forNested(hosts, "handlers.names", function (host, handler, names) {});
 	@example
-		jQuery.getEventsData.Host.forNested(hosts, "names.data", function (host, name, data) {});
+		jQuery.getEventsData.Host.forNested(hosts, "names.handlers.data", function (host, name, handler, data) {});
 	**/
 
 	Host.forNested = function (object, properties, callback) {
