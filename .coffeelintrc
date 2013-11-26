@@ -1,5 +1,5 @@
 {
-	"arrow_spacing": { "level": "error" },
+	"arrow_spacing": { "level": "ignore" },
 	"camel_case_classes": { "level": "error" },
 	"coffeescript_error": { "level": "error" },
 	"cyclomatic_complexity": {
@@ -26,7 +26,7 @@
 	},
 	"no_backticks": { "level": "error" },
 	"no_empty_param_list": { "level": "error" },
-	"no_implicit_braces": { "level": "error" },
+	"no_implicit_braces": { "level": "ignore" },
 	"no_implicit_parens": { "level": "ignore" },
 	"no_plusplus": { "level": "error" },
 	"no_stand_alone_at": { "level": "error" },
@@ -38,5 +38,5 @@
 		"allowed_in_comments": false
 	},
 	"non_empty_constructor_needs_parens": { "level": "ignore" },
-	"space_operators": { "level": "error" }
+	"space_operators": { "level": "ignore" }
 }
