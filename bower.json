@@ -1,5 +1,6 @@
 {
 	"name": "jQuery.hasEventListener",
+	"description": "A jQuery plugin to help knowing if a given event listener is bound to given element",
 	"version": "3.0.0",
 	"private": true,
 	"author": "fingerproof",
@@ -26,10 +27,11 @@
 		"jquery": "~2.0.3"
 	},
 	"devDependencies": {
-		"jquery-2.0": "jquery#2.0.3",
-		"jquery-1.10": "jquery#1.10.2",
-		"jquery-1.9": "jquery#1.9.1",
-		"jquery-1.8": "jquery#1.8.3",
-		"jquery-1.7": "jquery#1.7.2"
+		"jquery-2.0": "jquery#~2.0.3",
+		"jquery-1.10": "jquery#~1.10.2",
+		"jquery-1.9": "jquery#~1.9.1",
+		"jquery-1.8": "jquery#~1.8.3",
+		"jquery-1.7": "jquery#~1.7.2",
+		"sinon": "http://sinonjs.org/releases/sinon-1.7.3.js"
 	}
 }
