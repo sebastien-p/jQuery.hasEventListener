@@ -85,14 +85,13 @@ module.exports = function (grunt) {
 			if (!/^jquery/.exec(jQuery)) { return; }
 			each(tasks, function (task, target) {
 				var environment = target + "@" + jQuery;
-				//var min = "/jquery" + (target === "src" ? "" : ".min");
+				var min = "/jquery" + (target === "src" ? "" : ".min");
 				task.push("testem:ci:" + environment);
 				testem[environment] = {
 					options: settings,
 					src: [
 						"bower_components/sinon/index.js",
-						//"bower_components/" + jQuery + min + ".js", // cf ci-dessous
-						"bower_components/" + jQuery + "/jquery.js",
+						"bower_components/" + jQuery + min + ".js",
 						"<%= files." + target + "%>",
 						"<%= files.test.helpers %>",
 						//"<%= files.test.spec.js %>",
@@ -102,7 +101,7 @@ module.exports = function (grunt) {
 			});
 		});
 		registerTask("testem:ci:src", tasks.src);
-		registerTask("testem:ci:dist", tasks.dist); // jquery 1.7.2 n'inclus pas jquery.min.js !
+		registerTask("testem:ci:dist", tasks.dist);
 		registerTask("testem:dev", tasks.src[0].replace(/ci/, "run")); // ou grunt dev ?
 		return testem;
 	}({}, readJSON("test/.testem.json"))));
