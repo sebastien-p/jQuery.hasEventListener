@@ -60,6 +60,7 @@ todo.
 
 	/**
 	Get a clone of the internal jQuery events data for a given host.
+	@static
 	@method getEventsData
 	@for jQuery
 	@param host {Mixed} Whatever jQuery can bind events to.
@@ -130,6 +131,7 @@ todo.
 
 	/**
 	Know if a given host has some matching event handlers attached.
+	@static
 	@method hasEventListener
 	@for jQuery
 	@param host {Mixed} Whatever jQuery can bind events to.
