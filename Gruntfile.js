@@ -90,6 +90,7 @@ module.exports = function (grunt) {
 				testem[environment] = {
 					options: settings,
 					src: [
+						"bower_components/sinon/index.js",
 						//"bower_components/" + jQuery + min + ".js", // cf ci-dessous
 						"bower_components/" + jQuery + "/jquery.js",
 						"<%= files." + target + "%>",
@@ -104,7 +105,7 @@ module.exports = function (grunt) {
 		registerTask("testem:ci:dist", tasks.dist); // jquery 1.7.2 n'inclus pas jquery.min.js !
 		registerTask("testem:dev", tasks.src[0].replace(/ci/, "run")); // ou grunt dev ?
 		return testem;
-	}({}, readJSON("test/testem.json"))));
+	}({}, readJSON("test/.testem.json"))));
 
 	/**
 	$ grunt uglify
@@ -138,7 +139,7 @@ module.exports = function (grunt) {
 	config("yuidoc", {
 		doc: {
 			options: {
-				paths: "src", // files.src
+				paths: ["src", "test"], // files.src
 				outdir: "doc", // dans une branche gh-pages
 				linkNatives: true
 			},
