@@ -2,7 +2,8 @@
 /*global define */
 
 /**
-todo.
+A jQuery plugin to help knowing if a given
+event listener is bound to given element.
 @main hasEventListener
 @module hasEventListener
 **/
@@ -15,6 +16,7 @@ todo.
 
 	var each = $.each;
 	var grep = $.grep;
+	var merge = $.merge;
 	var getInternalData = $._data;
 	var isEmpty = $.isEmptyObject;
 	var hasOwn = $.proxy($.call, {}.hasOwnProperty);
@@ -55,6 +57,15 @@ todo.
 			// if no value passed, return `data`
 			if (!data || !value) { return data; }
 			return filter(data, property, value);
+		};
+	}
+
+	function bindRight (callback, right) {
+		// only use the first parameter
+		return function (left) {
+			// `right` must be an array or array-like
+			var parameters = merge([left], right);
+			return callback.apply(this, parameters);
 		};
 	}
 
@@ -185,32 +196,8 @@ todo.
 	**/
 
 	function fnGetEventsData (/*event, handler*/) {
-		var outerParameters = $.makeArray(arguments);
-		each(this, function (index, host) {
-			var parameters = [host].concat(outerParameters);
-			var data = getEventsData.apply(null, parameters);
-			return data;
-			//console.log(data);
-		});
+		// todo
 	}
-
-	// function fnGetEventsData (event/*, handler*/) { // use makeOneOrTwoParams ?
-	//	var data = {};
-	//	var fillData = function (__, host) {
-	//		each(getEventsData(host), function (key, value) {
-	//			if (!data[key]) { data[key] = []; }
-	//			merge(data[key], value);
-	//		});
-	//	};
-	//	if (arguments.length) {
-	//		data = [];
-	//		fillData = function (__, host) {
-	//			merge(data, getEventsData(host, event));
-	//		};
-	//	}
-	//	each(this, fillData);
-	//	return data;
-	//}
 
 	$.fn.getEventsData = fnGetEventsData;
 
@@ -238,26 +225,13 @@ todo.
 		jQuery(hosts).hasEventListener("myName.myNamespace", handler);
 	**/
 
-	function fnHasEventListener (/*event, handler*/) { // use oneParameter et twoParameters
-		var context = this;
-		var outterParameters = arguments;
-		return grep(this, function (host) {
-			var parameters = $.merge([host], outterParameters);
-			return hasEventListener.apply(context, parameters); // top level this au lieu de null ?
-		});
+	function fnHasEventListener (/*event, handler*/) {
+		// `bindRight` uses the first parameter passed
+		// to the `grep` callback which should be a host
+		return grep(this, bindRight(hasEventListener, arguments));
 	}
 
 	$.fn.hasEventListener = fnHasEventListener;
-
-	/*var makeArray = $.makeArray;
-
-	function make (callback, rest) {
-		rest = makeArray(arguments).slice(1);
-		return function () {
-			var parameters = makeArray(arguments).concat(rest);
-			return callback.apply(this, parameters);
-		};
-	}*/
 
 	/**
 	Select all given hosts that have some matching event handlers attached.
@@ -275,20 +249,21 @@ todo.
 		jQuery("p,span:hasEventListener(myName.myNamespace)");
 	**/
 
-	// https://github.com/jquery/sizzle/wiki/Sizzle-Documentation#-backwards-compatible-plugins-for-pseudos-with-arguments
 	var exprHasEventListener = (function (pseudo) {
 		try { return $.expr.createPseudo(pseudo); }
 		catch (error) {
+			// jQuery 1.7 compatibility, see Sizzle documentation
+			// to be removed at some point
 			return function (host, index, match) {
 				return pseudo(match[3])(host);
 			};
 		}
 	}(function (selector) {
-		function one (host) { return hasEventListener(host); }
-		function two (host) { return hasEventListener(host, selector); }
-		return selector ? two : one;
-		//if (selector) { return make(hasEventListener, selector); }
-		//return make(hasEventListener);
+		// make sure to pass a selector or an
+		// empty array because `selector` can be
+		// `undefined` or an empty string here
+		selector = selector ? [selector] : [];
+		return bindRight(hasEventListener, selector);
 	}));
 
 	$.expr[":"].hasEventListener = exprHasEventListener;
