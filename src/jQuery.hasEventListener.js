@@ -3,255 +3,249 @@
 
 /**
 todo.
-@module jQuery.hasEventListener
-@author fingerproof
-@class jQuery
-@static
+@main hasEventListener
+@module hasEventListener
 **/
 
 (function (factory) {
 	// AMD or global variable export
-	if (typeof define === "function" && define.amd) {
-		define(["jquery"], factory);
-	} else { factory(jQuery); }
+	if (typeof define !== "function" || !define.amd) { factory(jQuery); }
+	else { define(["jquery"], factory); }
 }(function ($) {
 
-	//var map = $.map;
 	var each = $.each;
-	var grep = $.grep; // virer
-	var merge = $.merge;
-	var getIternalData = $._data;
+	var grep = $.grep;
+	var getInternalData = $._data;
+	var isEmpty = $.isEmptyObject;
 	var hasOwn = $.proxy($.call, {}.hasOwnProperty);
+	var deepCopy = $.proxy($.call, $.extend, $, true);
+
+	function parseEvent (event) {
+		// `event` must be a valid non-empty string
+		// like `"myName"` or `".nyNamespace"`
+		// or even `"myName.myNamespace"`
+		event = event && /^([^.]+)?(?:\.([^.]+))?$/.exec(event);
+		// if the regular expression doesn't match anything
+		// `event` would be `null` so make sure to handler that
+		return event && { name: event[1], namespace: event[2] };
+	}
+
+	function filterOne (event, property, value) {
+		event = grep(event, function (object) {
+			return object[property] === value;
+		});
+		// return `undefined` instead of empty arrays
+		if (event.length) { return event; }
+	}
+
+	function filterAll (events, property, value) {
+		each(events, function (name, event) {
+			event = filterOne(event, property, value);
+			// reuse the passed object because it's a clone
+			if (event) { events[name] = event; }
+			else { delete events[name]; }
+		});
+		// return `undefined` instead of empty objects
+		if (!isEmpty(events)) { return events; }
+	}
+
+	function useFilter (filter) {
+		return function (data, property, value) {
+			// if no data passed, return `undefined`
+			// if no value passed, return `data`
+			if (!data || !value) { return data; }
+			return filter(data, property, value);
+		};
+	}
 
 	/**
-	Get the internal jQuery events data for a given host.
+	Get a clone of the internal jQuery events data for a given host.
 	@method getEventsData
-	@category Function
-	@uses hasOwn
+	@for jQuery
 	@param host {Mixed} Whatever jQuery can bind events to.
-	@param [key] {String} The name of a particular event.
-	@return {Object|Array} The actual data, can be empty. // undefined à la place !
+	@param [event] {String} `"name"`, `"name.namespace"` or `".namespace"`.
+	@param [handler] {Function} A handler that may have been attached.
+	@return {Object|Array} The cloned data or `undefined`.
 	@example
 		jQuery.getEventsData(window);
 	@example
 		jQuery.getEventsData(document.body, "click");
+	@example
+		jQuery.getEventsData($("img")[0], "load.avatar");
+	@example
+		jQuery.getEventsData(object, ".myNamespace");
+	@example
+		jQuery.getEventsData(host, function () {});
+	@example
+		jQuery.getEventsData(host, ".myNamespace", handler);
+	@example
+		jQuery.getEventsData(host, "myName.myNamespace", handler);
 	**/
 
-	/*function getEventsData (host, event) {
-		var data = getIternalData(host, "events") || {};
-		if (arguments.length < 2) { return data; }
-		//return hasOwn(data, event) ? data[event] : [];
-		return event && hasOwn(data, event) ? data[event] : []; // ?
-	}*/
-
-	function filterOne (data, key, value) {
-		if (!value) { return data; } // virer ou ajouter aussi a filerAll ?
-		return grep(data, function (v) { // map ?
-			return v[key] === value;
-		});
-	}
-
-	function filterAll (data, key, value) {
-		var bar = {};
-		each(data, function (k, v) {
-			var foo = filterOne(v, key, value);
-			if (foo.length) { bar[k] = foo; } // extend ?
-		});
-		if ($.isEmptyObject(bar)) { return; }
-		return bar;
-	}
-
-	function parseEvent (event) {
-		//var eventRegex = /^(?:(delegated)!)?([^.]+)?(?:\.([^.]+))?$/; // support de delegated dans 3.1
-		event = /^([^.]+)?(?:\.([^.]+))?$/.exec(event);
-		if (event[1] || event[2]) {
-			return {
-				//delegated: !!event[1],
-				//name: event[2],
-				//namespace: event[3]
-				name: event[1],
-				namespace: event[2]
-			};
-		}
-	}
-
 	function getEventsData (host, event, handler) {
-		var data = getIternalData(host, "events");
+		var data = getInternalData(host, "events");
+		// `host` has no events attached
 		if (!data) { return; }
-		if (arguments.length < 2) { return data; }
-		var filter = filterAll;
-
+		var numberOfParameters = arguments.length;
+		data = deepCopy({}, data);
+		// `host` is the only passed parameter
+		if (numberOfParameters < 2) { return data; }
+		var filter = useFilter(filterAll);
+		// `host` and `event` are passed
 		if (typeof event === "string") {
 			event = parseEvent(event);
+			// `event` isn't a valid string
 			if (!event) { return; }
 			if (event.name) {
+				// `host` has no events of this name attached
 				if (!hasOwn(data, event.name)) { return; }
 				data = data[event.name];
-				filter = filterOne;
+				filter = useFilter(filterOne);
 			}
+			// if no namespace passed, just do `data = data`
+			// `data` can also be `undefined` at this point
 			data = filter(data, "namespace", event.namespace);
 		}
-		else {
-			if (typeof event !== "function") { return; }
-			data = filter(data, "handler", event);
-			//handler = event;
+		// `host` and `event` are passed but `event`
+		// isn't a string so it must be a function
+		else if (numberOfParameters < 3) {
+			numberOfParameters = 3;
+			handler = event;
 		}
-
-		if (arguments.length > 2 && typeof handler !== "function") {
-			return;
-		}
-
-		if (!$.isEmptyObject(data) && typeof handler === "function") {
-			data = filter(data, "handler", handler);
-		} // si args.length > 2 return + si event pas string
-
-		if (data && $.isEmptyObject(data)) { return; }
-
-		return data;
+		// `host` and `event` and `handler` are passed
+		// but `event` isn't a string so stop here
+		else { return; }
+		// `host` and `event` are passed
+		// and `event` is a valid string
+		if (numberOfParameters < 3) { return data; }
+		// `host` and `event` are passed and `event`
+		// isn't a function or `handler` is also
+		// passed but it isn't a function either
+		if (typeof handler !== "function") { return; }
+		// `handler` is a function, `event` is valid
+		return filter(data, "handler", handler);
 	}
-
-	//var tests = $.Callbacks("stopOnFalse");
-/*	function addTest (tests, property, value) {
-		tests.add(function (event) {
-			return event[property] === value;
-		});
-	}*/
-
-	/*function getEventsData (host, event, handler) {
-		var eventsData = getIternalData(host, "events") || {};
-		if (arguments.length < 2) { return eventsData; }
-		var tests = $.Callbacks("stopOnFalse");
-		if (arguments.length < 3) {
-			if (typeof event === "string") {
-				event = /^([^.]+)(?:\.([^.]+))?$/.exec(event);
-				var name = event[1];
-				var namespace = event[2];
-				if (name && !hasOwn(eventsData, name)) { return []; }
-
-			} else {
-				handler = event;
-			}
-		} else {
-			handler();
-		}
-		if (arguments.length > 2 || handler) {
-			addTest(tests, "handler", handler);
-		}
-		return eventsData;
-	}*/
 
 	$.getEventsData = getEventsData;
 
 	/**
-	todo.
-	@method fn.getEventsData
-	@category Function
-	@param [key] {String} todo.
-	@return {todo} todo.
-	@example
-		$(todo).getEventsData();
-	@example
-		$(todo).getEventsData(todo);
-	**/
-
-	function fnGetEventsData (event/*, handler*/) { // use makeOneOrTwoParams ?
-		var data = {};
-		var fillData = function (__, host) {
-			each(getEventsData(host), function (key, value) {
-				if (!data[key]) { data[key] = []; }
-				merge(data[key], value);
-			});
-		};
-		if (arguments.length) {
-			data = [];
-			fillData = function (__, host) {
-				merge(data, getEventsData(host, event));
-			};
-		}
-		each(this, fillData);
-		return data;
-	}
-
-	$.fn.getEventsData = fnGetEventsData;
-
-	/**
-	todo.
+	Know if a given host has some matching event handlers attached.
 	@method hasEventListener
-	@category Function
-	@uses getEventsData
-	@param host {Mixed} todo.
-	@param [event] {String} todo.
-	@param [handler] {Function} todo.
-	@return {Boolean} todo.
+	@for jQuery
+	@param host {Mixed} Whatever jQuery can bind events to.
+	@param [event] {String} `"name"`, `"name.namespace"` or `".namespace"`.
+	@param [handler] {Function} A handler that may have been attached.
+	@return {Boolean} Wether the passed host has some matching events attached.
 	@example
-		todo;
+		jQuery.hasEventListener(window);
 	@example
-		todo;
+		jQuery.hasEventListener(document.body, "click");
+	@example
+		jQuery.hasEventListener($("img")[0], "load.avatar");
+	@example
+		jQuery.hasEventListener(object, ".myNamespace");
+	@example
+		jQuery.hasEventListener(host, function () {});
+	@example
+		jQuery.hasEventListener(host, ".myNamespace", handler);
+	@example
+		jQuery.hasEventListener(host, "myName.myNamespace", handler);
 	**/
 
-	function hasEventListener (host, event, handler) {
-		//return !!getEventsData.apply(this, arguments);
-		var eventsData;
-		if (arguments.length > 1) {
-			event = /^([^.]+)(?:\.([^.]+))?$/.exec(event); // en fait ça doit aller dans getEventsData !
-			var name = event[1];
-			var namespace = event[2]; //|| ""; // ??
-			eventsData = getEventsData(host, name);
-			if (namespace) {
-				eventsData = grep(eventsData, function (value) {
-					return value.namespace === namespace;
-				});
-			}
-			if (handler) {
-				eventsData = grep(eventsData, function (value) {
-					return value.handler === handler;
-				});
-			}
-		} else {
-			eventsData = getEventsData(host);
-		}
-		//var eventsData = getEventsData.apply(null, arguments);
-		return !$.isEmptyObject(eventsData);
+	function hasEventListener (/*host, event, handler*/) {
+		return !!getEventsData.apply(this, arguments);
 	}
 
 	$.hasEventListener = hasEventListener;
 
 	/**
-	todo.
+	Get a merged clone of the internal jQuery events data for all given hosts.
+	@method fn.getEventsData
+	@for jQuery
+	@since 3.1.0
+	@param [event] {String} `"name"`, `"name.namespace"` or `".namespace"`.
+	@param [handler] {Function} A handler that may have been attached.
+	@return {Object|Array} The merged cloned data or `undefined`.
+	@example
+		jQuery(window).getEventsData();
+	@example
+		jQuery([window, document.body]).getEventsData("click");
+	@example
+		jQuery("img").getEventsData("load.avatar");
+	@example
+		jQuery("*").getEventsData(".myNamespace");
+	@example
+		jQuery([object1, object2, objectN]).getEventsData(function () {});
+	@example
+		jQuery(hosts).getEventsData(".myNamespace", handler);
+	@example
+		jQuery(hosts).getEventsData("myName.myNamespace", handler);
+	**/
+
+	function fnGetEventsData (/*event, handler*/) {
+		var outerParameters = $.makeArray(arguments);
+		each(this, function (index, host) {
+			var parameters = [host].concat(outerParameters);
+			var data = getEventsData.apply(null, parameters);
+			return data;
+			//console.log(data);
+		});
+	}
+
+	// function fnGetEventsData (event/*, handler*/) { // use makeOneOrTwoParams ?
+	//	var data = {};
+	//	var fillData = function (__, host) {
+	//		each(getEventsData(host), function (key, value) {
+	//			if (!data[key]) { data[key] = []; }
+	//			merge(data[key], value);
+	//		});
+	//	};
+	//	if (arguments.length) {
+	//		data = [];
+	//		fillData = function (__, host) {
+	//			merge(data, getEventsData(host, event));
+	//		};
+	//	}
+	//	each(this, fillData);
+	//	return data;
+	//}
+
+	$.fn.getEventsData = fnGetEventsData;
+
+	/**
+	Filter all given hosts that have some matching event handlers attached.
+	@chainable
 	@method fn.hasEventListener
-	@category Function
-	@uses hasEventListener
-	@param [event] {String} todo.
-	@param [handler] {Function} todo.
-	@return {todo} todo.
+	@for jQuery
+	@param [event] {String} `"name"`, `"name.namespace"` or `".namespace"`.
+	@param [handler] {Function} A handler that may have been attached.
+	@return {jQuery Collection} All hosts that have some matching events attached.
 	@example
-		todo;
+		jQuery(window).hasEventListener();
 	@example
-		todo;
+		jQuery([window, document.body]).hasEventListener("click");
+	@example
+		jQuery("img").hasEventListener("load.avatar");
+	@example
+		jQuery("*").hasEventListener(".myNamespace");
+	@example
+		jQuery([object1, object2, objectN]).hasEventListener(function () {});
+	@example
+		jQuery(hosts).hasEventListener(".myNamespace", handler);
+	@example
+		jQuery(hosts).hasEventListener("myName.myNamespace", handler);
 	**/
 
 	function fnHasEventListener (/*event, handler*/) { // use oneParameter et twoParameters
+		var context = this;
 		var outterParameters = arguments;
 		return grep(this, function (host) {
-			var parameters = merge([host], outterParameters);
-			return hasEventListener.apply(null, parameters);
+			var parameters = $.merge([host], outterParameters);
+			return hasEventListener.apply(context, parameters); // top level this au lieu de null ?
 		});
 	}
 
 	$.fn.hasEventListener = fnHasEventListener;
-
-	/**
-	todo.
-	@method expr[":"].hasEventListener
-	@category Function
-	@uses hasEventListener
-	@param todo.
-	@return {todo} todo.
-	@example
-		todo;
-	@example
-		todo;
-	**/
 
 	/*var makeArray = $.makeArray;
 
@@ -263,11 +257,27 @@ todo.
 		};
 	}*/
 
+	/**
+	Select all given hosts that have some matching event handlers attached.
+	@chainable
+	@method expr.hasEventListener
+	@for jQuery
+	@return {jQuery Collection} All hosts that have some matching events attached.
+	@example
+		jQuery("*:hasEventListener");
+	@example
+		jQuery("img:hasEventListener(load)");
+	@example
+		jQuery("div:hasEventListener(.myNamespace)");
+	@example
+		jQuery("p,span:hasEventListener(myName.myNamespace)");
+	**/
+
 	// https://github.com/jquery/sizzle/wiki/Sizzle-Documentation#-backwards-compatible-plugins-for-pseudos-with-arguments
 	var exprHasEventListener = (function (pseudo) {
 		try { return $.expr.createPseudo(pseudo); }
 		catch (error) {
-			return function (host, __, match) {
+			return function (host, index, match) {
 				return pseudo(match[3])(host);
 			};
 		}
@@ -281,6 +291,11 @@ todo.
 
 	$.expr[":"].hasEventListener = exprHasEventListener;
 
-	// todo.
+	/**
+	The "write less, do more" JavaScript library.
+	@class jQuery
+	@static
+	**/
+
 	return $;
 }));
