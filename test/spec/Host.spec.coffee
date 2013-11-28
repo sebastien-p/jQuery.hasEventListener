@@ -246,7 +246,6 @@ describe "Host", ->
 
 			it "should be a function", ->
 				expect(forNested).to.be.a "function"
-
 			it "shouldn't call the callback if no events attached", ->
 				@hosts = @hosts.noEvents
 				forNested @hosts, "names", @spy
