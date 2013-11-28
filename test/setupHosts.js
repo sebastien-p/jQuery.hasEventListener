@@ -11,6 +11,7 @@ Provides an interface to ease unit testing of `jQuery.hasEventListener`.
 	/**
 	Setup a bunch of `Host` instances to be used in unit tests.
 	@private
+	@static
 	@method getEventsData.setupHosts
 	@for jQuery
 	@return {Object} An object containing useful `Hosts` instances.
