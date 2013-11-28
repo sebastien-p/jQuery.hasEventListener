@@ -1,9 +1,9 @@
 describe "jQuery.hasEventListener", ->
 	expect = chai.expect
-	method = jQuery.hasEventListener
+	hasEventListener = jQuery.hasEventListener
 
 	it "should be a function", ->
-		expect(method).to.be.a "function"
-	# method()
+		expect(hasEventListener).to.be.a "function"
+	# hasEventListener()
 	it "should throw an error if `host` isn't valid", ->
-		expect(method).to.throw()
+		expect(hasEventListener).to.throw()
