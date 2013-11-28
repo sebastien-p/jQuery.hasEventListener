@@ -25,6 +25,7 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 				it "should return `undefined` if it's not a valid string", ->
 					forEach @hosts, (host) ->
 						expect(getEventsData host, "").to.be.undefined
+						expect(getEventsData host, "..").to.be.undefined
 				# getEventsData(host, "name0")
 				it "should return `undefined` if it's a non attached name", ->
 					forEach @hosts, (host) ->
@@ -91,16 +92,19 @@ describe "jQuery.getEventsData - `host` has no matching events attached", ->
 				it "should return `undefined` if `handler` isn't a function", ->
 					forEach @hosts, (host) ->
 						expect(getEventsData host, "", notValid).to.be.undefined
+						expect(getEventsData host, "..", notValid).to.be.undefined
 
 				describe "`handler` is a function", ->
 					# getEventsData(host, "", handler0)
 					it "should return `undefined` if it's a non attached handler", ->
 						forEach @hosts, (host) ->
 							expect(getEventsData host, "", handler0).to.be.undefined
+							expect(getEventsData host, "..", handler0).to.be.undefined
 					# getEventsData(host, "", handlerN)
 					it "should return `undefined` if it's an attached handler", ->
 						forEach @hosts, "handlers", (host, handler) ->
 							expect(getEventsData host, "", handler).to.be.undefined
+							expect(getEventsData host, "..", handler).to.be.undefined
 
 			describe "`event` is a valid string", ->
 

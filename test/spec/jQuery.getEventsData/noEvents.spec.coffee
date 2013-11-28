@@ -25,6 +25,7 @@ describe "jQuery.getEventsData - `host` has no events attached", ->
 				# getEventsData(host, "")
 				it "should return `undefined` if it's not a valid string", ->
 					expect(getEventsData @host, "").to.be.undefined
+					expect(getEventsData @host, "..").to.be.undefined
 				# getEventsData(host, ".namspace0")
 				it "should return `undefined` if it contains a namespace", ->
 					expect(getEventsData @host, ".namespace0").to.be.undefined
@@ -51,6 +52,7 @@ describe "jQuery.getEventsData - `host` has no events attached", ->
 				# getEventsData(host, "", notValid)
 				it "should return `undefined` if it's not a valid string", ->
 					expect(getEventsData @host, "", notValid).to.be.undefined
+					expect(getEventsData @host, "..", notValid).to.be.undefined
 				# getEventsData(host, ".namespace0", notValid)
 				it "should return `undefined` if it contains a namespace", ->
 					expect(getEventsData @host, ".namespace0", notValid).to.be.undefined
@@ -65,6 +67,7 @@ describe "jQuery.getEventsData - `host` has no events attached", ->
 				# getEventsData(host, "", handler0)
 				it "should return `undefined` if it's not a valid string", ->
 					expect(getEventsData @host, "", handler0).to.be.undefined
+					expect(getEventsData @host, "..", handler0).to.be.undefined
 				# getEventsData(host, ".namespace0", handler0)
 				it "should return `undefined` if it contains a namespace", ->
 					expect(getEventsData @host, ".namespace0", handler0).to.be.undefined
